@@ -8,5 +8,34 @@ services:
       - MYSQL_DATABASE=gamelab
       - MYSQL_ROOT_PASSWORD=root
     ports:
-      - "3306:3306"
-      - "33060:33060"
+      - "3300:3306"
+      - "33000:33060"
+
+  minio:
+    image: quay.io/minio/minio
+    restart: always
+    environment:
+      - MINIO_ROOT_USER=ROOTUSER
+      - MINIO_ROOT_PASSWORD=CHANGEME123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      retries: 5
+
+  minio-init:
+    image: minio/mc
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+        mc alias set local http://minio:9000 ROOTUSER CHANGEME123;
+        mc mb local/the-gamelab;
+        mc admin user add local the-gamelab password;
+        mc admin policy set local readwrite user=the-gamelab;
+      "
+    restart: "no"

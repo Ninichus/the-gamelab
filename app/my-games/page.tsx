@@ -1,9 +1,32 @@
-export default function BrowsePage() {
+"use server";
+import { getUser } from "@/lib/session";
+import { getGames } from "@/lib/actions/games/get-games";
+
+import { Link } from "lucide-react";
+
+export default async function MyGamesPage() {
+  const user = await getUser();
+  const games = await getGames(user.id);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        Here, you will be able to see your games and manage them.
-      </main>
-    </div>
+    <ul>
+      {games.map((game) => (
+        <li key={game.id}>
+          <Link href={`/game/${game.id}`} className="flex items-center gap-2">
+            <div className="flex flex-col">
+              <span className="text-sm font-medium">{game.name}</span>
+              <Badge className="text-xs text-muted-foreground">
+                {game.type}
+              </Badge>
+            </div>
+            <div className="flex items-center gap-1">
+              <Badge className="text-xs text-muted-foreground">
+                {game.status}
+              </Badge>
+            </div>
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 }

@@ -34,5 +34,5 @@ export async function GET() {
     return new Response("Error creating game", { status: 500 });
   }
 
-  redirect(`/game/${gameId}`);
+  redirect(`/game/${gameId}/edit`);
 }
