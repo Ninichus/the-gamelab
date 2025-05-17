@@ -16,6 +16,18 @@ CREATE TABLE `comments` (
 	CONSTRAINT `comments_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
+CREATE TABLE `files` (
+	`id` varchar(40) NOT NULL,
+	`name` varchar(255) NOT NULL,
+	`type` enum('carousel_image','browse_image','game_archive') NOT NULL,
+	`index` int,
+	`updated_at` timestamp NOT NULL DEFAULT (now()),
+	`download_count` int NOT NULL DEFAULT 0,
+	`game_id` varchar(40) NOT NULL,
+	`user_id` int NOT NULL,
+	CONSTRAINT `files_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
 CREATE TABLE `games` (
 	`id` varchar(40) NOT NULL,
 	`name` varchar(255) NOT NULL,
@@ -62,12 +74,17 @@ ALTER TABLE `authors` ADD CONSTRAINT `authors_user_id_users_id_fk` FOREIGN KEY (
 ALTER TABLE `authors` ADD CONSTRAINT `authors_game_id_games_id_fk` FOREIGN KEY (`game_id`) REFERENCES `games`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `comments` ADD CONSTRAINT `comments_author_users_id_fk` FOREIGN KEY (`author`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `comments` ADD CONSTRAINT `comments_game_id_games_id_fk` FOREIGN KEY (`game_id`) REFERENCES `games`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `files` ADD CONSTRAINT `files_game_id_games_id_fk` FOREIGN KEY (`game_id`) REFERENCES `games`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE `files` ADD CONSTRAINT `files_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `marks` ADD CONSTRAINT `marks_author_users_id_fk` FOREIGN KEY (`author`) REFERENCES `users`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `marks` ADD CONSTRAINT `marks_game_id_games_id_fk` FOREIGN KEY (`game_id`) REFERENCES `games`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE `tags` ADD CONSTRAINT `tags_game_id_games_id_fk` FOREIGN KEY (`game_id`) REFERENCES `games`(`id`) ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX `user_idx` ON `authors` (`user_id`);--> statement-breakpoint
 CREATE INDEX `user_idx` ON `comments` (`author`);--> statement-breakpoint
 CREATE INDEX `game_idx` ON `comments` (`game_id`);--> statement-breakpoint
+CREATE INDEX `files_idx` ON `files` (`id`);--> statement-breakpoint
+CREATE INDEX `game_idx` ON `files` (`game_id`);--> statement-breakpoint
+CREATE INDEX `user_idx` ON `files` (`user_id`);--> statement-breakpoint
 CREATE INDEX `game_idx` ON `games` (`id`);--> statement-breakpoint
 CREATE INDEX `authorx` ON `marks` (`author`);--> statement-breakpoint
 CREATE INDEX `game_idx` ON `marks` (`game_id`);

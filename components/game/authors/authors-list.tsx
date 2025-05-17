@@ -8,6 +8,7 @@ import { getUser } from "@/lib/session";
 import { QueryProvider } from "@/components/query-provider";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { EditAuthor } from "@/components/game/authors/edit-author";
 
 export async function AuthorsList({
   game,
@@ -26,30 +27,50 @@ export async function AuthorsList({
   return (
     <>
       <ul className="border rounded-md mb-2">
-        {authors.map((author, index) => (
-          <Link key={author.id} href={`/profile/${author.username}`}>
-            <li
-              className={cn(
-                "p-4 flex justify-between items-center hover:bg-secondary/90 rounded-md",
-                {
-                  "border-b": index !== authors.length - 1,
-                }
-              )}
-            >
-              <h3 className="text-lg font-semibold">
-                {`${author.first_name} ${author.last_name}`}
-                {author.role ? ` - ${author.role}` : undefined}
-              </h3>
-              <ChevronRight
-                className="h-4 w-4 text-muted-foreground"
-                aria-hidden="true"
-              />
-              {edit && author.id != user.id && (
-                <RemoveAuthor gameId={game.id} userId={author.id} />
-              )}
-            </li>
-          </Link>
-        ))}
+        {edit
+          ? authors.map((author, index) => (
+              <li
+                className={cn(
+                  "p-4 flex justify-between items-center hover:bg-secondary/90 rounded-md",
+                  {
+                    "border-b": index !== authors.length - 1,
+                  }
+                )}
+                key={author.id}
+              >
+                <h3 className="text-lg font-semibold">
+                  {`${author.first_name} ${author.last_name}`}
+                  {author.role ? ` - ${author.role}` : undefined}
+                </h3>
+                <div>
+                  <EditAuthor gameId={game.id} authorId={author.id} />
+                  {author.id != user.id && (
+                    <RemoveAuthor gameId={game.id} userId={author.id} />
+                  )}
+                </div>
+              </li>
+            ))
+          : authors.map((author, index) => (
+              <Link key={author.id} href={`/profile/${author.username}`}>
+                <li
+                  className={cn(
+                    "p-4 flex justify-between items-center hover:bg-secondary/90 rounded-md",
+                    {
+                      "border-b": index !== authors.length - 1,
+                    }
+                  )}
+                >
+                  <h3 className="text-lg font-semibold">
+                    {`${author.first_name} ${author.last_name}`}
+                    {author.role ? ` - ${author.role}` : undefined}
+                  </h3>
+                  <ChevronRight
+                    className="h-4 w-4 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                </li>
+              </Link>
+            ))}
       </ul>
       {edit && (
         <QueryProvider>

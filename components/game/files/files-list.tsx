@@ -1,11 +1,50 @@
-"use client";
+"use server";
+import { getFiles } from "@/lib/actions/files/get-files";
+import { File } from "lucide-react";
+import { Error } from "@/components/error";
+import { DeleteFile } from "./delete-file";
+import { AddFile } from "./add-file";
+import Link from "next/link";
 
-export function FilesList({
+export async function FilesList({
   game,
   edit = false,
 }: {
   game: { id: string };
   edit?: boolean;
 }) {
-  return <div className="w-full"></div>;
+  const result = await getFiles(game.id);
+  if (!result.success) {
+    return <Error message={result.error} />;
+  }
+
+  return (
+    <>
+      <ul className="flex flex-col gap-2">
+        {result.files.map((file) => (
+          <li
+            key={file.id}
+            className="flex items-center justify-between gap-4 p-2 border-b border-b-slate-200 dark:border-b-slate-700"
+          >
+            <div className="flex items-center gap-4">
+              <File />
+              <span className="text-sm font-medium text-slate-900 dark:text-slate-50">
+                {file.name}
+              </span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">
+                {file.downloadCount} downloads
+              </span>
+              <Link href={`/download/${file.id}`}>
+                <span className="text-xs text-blue-500 dark:text-blue-400">
+                  Download
+                </span>
+              </Link>
+              {edit && <DeleteFile fileId={file.id} gameId={game.id} />}
+            </div>
+          </li>
+        ))}
+      </ul>
+      {edit && <AddFile gameId={game.id} index={result.files.length} />}
+    </>
+  );
 }

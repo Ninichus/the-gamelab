@@ -11,8 +11,11 @@ import { CommentsSection } from "@/components/game/comments/comments-section";
 import { GameType } from "@/components/game/game-type";
 import { buildTabs } from "@/lib/actions/build-tabs";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
+import { EditGameBanner } from "@/components/game/edit-game-banner";
 
 //TODO use canRead and redirect accordingly
+//TODO give a mark
+//TODO add a comment
 
 export default async function GamePage({
   params,
@@ -37,6 +40,7 @@ export default async function GamePage({
     );
   }
 
+  let canEdit = false;
   // Published games are public
   if (game.status !== "published") {
     // Check if the user is amongst the authors of the game
@@ -48,17 +52,34 @@ export default async function GamePage({
     const [author] = await db
       .select()
       .from(authors)
-      .where(and(eq(authors.gameId, gameId), eq(authors.userId, user.id)));
+      .where(and(eq(authors.gameId, gameId), eq(authors.userId, user.id)))
+      .limit(1);
 
     if (!author && !user.isAdmin) {
       unauthorized();
     }
+    canEdit = true;
+  } else {
+    const user = await getUser();
+    canEdit =
+      user &&
+      ((
+        await db
+          .select()
+          .from(authors)
+          .where(and(eq(authors.gameId, gameId), eq(authors.userId, user.id)))
+          .limit(1)
+      ).length > 0 ||
+        user.isAdmin);
   }
 
   const tabs = await buildTabs({ game, edit: false });
 
   return (
     <>
+      {canEdit && (
+        <EditGameBanner game={{ id: game.id, status: game.status }} />
+      )}
       <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
         {game.name}
       </h1>

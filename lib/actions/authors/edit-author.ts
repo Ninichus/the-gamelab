@@ -5,7 +5,7 @@ import { canWrite } from "@/lib/permissions";
 import { eq, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
-export async function addAuthor({
+export async function editAuthor({
   gameId,
   userId,
   role,
@@ -18,19 +18,13 @@ export async function addAuthor({
     return { success: false, error: "Unauthorized" };
   }
 
-  const [existingAuthor] = await db
-    .select()
-    .from(authors)
-    .where(and(eq(authors.gameId, gameId), eq(authors.userId, userId)))
-    .limit(1);
-  if (existingAuthor) {
-    return { success: false, error: "Author already exists" };
-  }
-
   try {
-    await db.insert(authors).values({ gameId, userId, role });
+    await db
+      .update(authors)
+      .set({ role })
+      .where(and(eq(authors.userId, userId), eq(authors.gameId, gameId)));
   } catch (error) {
-    return { success: false, error: "Failed to add author" };
+    return { success: false, error: "Failed to update role" };
   }
 
   revalidatePath(`/game/${gameId}`);

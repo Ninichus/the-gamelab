@@ -17,6 +17,7 @@ services:
     environment:
       - MINIO_ROOT_USER=ROOTUSER
       - MINIO_ROOT_PASSWORD=CHANGEME123
+      - MINIO_REGION=viarezo
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -36,6 +37,7 @@ services:
         mc alias set local http://minio:9000 ROOTUSER CHANGEME123;
         mc mb local/the-gamelab;
         mc admin user add local the-gamelab password;
-        mc admin policy set local readwrite user=the-gamelab;
+        mc admin policy attach local/the-gamelab readwrite --user the-gamelab;
+        mc admin user svcacct add --access-key thegamelabkey --secret-key thegamelabsecret local the-gamelab;
       "
     restart: "no"

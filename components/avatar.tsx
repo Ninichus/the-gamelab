@@ -1,6 +1,6 @@
 import { Avatar as RadixAvatar } from "radix-ui";
 
-export async function Avatar({
+export function Avatar({
   className,
   user,
 }: {

@@ -22,9 +22,11 @@ import { addTag } from "@/lib/actions/tags/add-tag";
 export function AddTag({
   gameId,
   tags,
+  currentTags,
 }: {
   gameId: string;
   tags: { name: string }[];
+  currentTags: { name: string }[];
 }) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
@@ -63,18 +65,20 @@ export function AddTag({
             )}
 
             <CommandGroup>
-              {tags.map((tag) => (
-                <CommandItem
-                  key={tag.name}
-                  value={tag.name}
-                  onSelect={async (currentValue: string) => {
-                    await addTag({ gameId, tagName: currentValue });
-                    setOpen(false);
-                  }}
-                >
-                  {tag.name}
-                </CommandItem>
-              ))}
+              {tags
+                .filter((tag) => !currentTags.includes(tag))
+                .map((tag) => (
+                  <CommandItem
+                    key={tag.name}
+                    value={tag.name}
+                    onSelect={async (currentValue: string) => {
+                      await addTag({ gameId, tagName: currentValue });
+                      setOpen(false);
+                    }}
+                  >
+                    {tag.name}
+                  </CommandItem>
+                ))}
             </CommandGroup>
           </CommandList>
         </Command>

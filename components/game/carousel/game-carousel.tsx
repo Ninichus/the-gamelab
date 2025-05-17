@@ -1,10 +1,11 @@
-"use client";
+"use server";
 
 import EmblaCarousel from "./embla-carousel";
 import { EmblaOptionsType } from "embla-carousel";
-import "@/public/embla.css";
+import { getSlides } from "@/lib/actions/carousel/get-slides";
+import { Error } from "@/components/error";
 
-export function GameCarousel({
+export async function GameCarousel({
   game,
   edit = false,
 }: {
@@ -12,10 +13,19 @@ export function GameCarousel({
   edit?: boolean;
 }) {
   const options: EmblaOptionsType = {};
+  const slides = await getSlides(game.id);
+  if (!slides.success) {
+    return <Error message={slides.error} />;
+  }
 
   return (
     <div className="w-full">
-      <EmblaCarousel options={options} slides={[0, 1, 2, 3, 4, 5]} />
+      <EmblaCarousel
+        options={options}
+        slides={slides.slides}
+        gameId={game.id}
+        edit
+      />
     </div>
   );
 }

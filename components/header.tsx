@@ -15,7 +15,7 @@ export async function Header() {
   ];
 
   if (user) {
-    navLinks.push({ href: "/my-games", title: "My Games" });
+    navLinks.push({ href: `/profile/${user.username}`, title: "My Games" });
   }
 
   if (isAdmin) {

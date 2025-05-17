@@ -11,6 +11,8 @@ import { EditGameName } from "@/components/game/edit-game-name";
 import { TagsList } from "@/components/game/tags/tags-list";
 import { GameType } from "@/components/game/game-type";
 import { GameCarousel } from "@/components/game/carousel/game-carousel";
+import { EditGameBanner } from "@/components/game/edit-game-banner";
+import { ManageGameButtons } from "@/components/game/manage-game-buttons";
 
 export default async function EditGamePage({
   params,
@@ -55,7 +57,18 @@ export default async function EditGamePage({
 
   return (
     <>
-      <EditGameName game={{ id: game.id, name: game.name }} />
+      <EditGameBanner
+        game={{ id: game.id, status: game.status }}
+        showEditButton={false}
+        isAdmin={user.isAdmin}
+      />
+      <div className="flex items-center justify-between mb-4">
+        <EditGameName game={{ id: game.id, name: game.name }} />
+        <div>
+          <ManageGameButtons game={{ status: game.status, id: gameId }} />
+        </div>
+      </div>
+
       <GameType game={{ id: game.id, type: game.type }} edit={true} />
       <TagsList game={{ id: game.id }} edit={true} />
       <GameCarousel game={{ id: game.id }} edit={true} />

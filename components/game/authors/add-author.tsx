@@ -46,7 +46,7 @@ export function AddAuthor({
   const [roleValue, setRoleValue] = useState(""); //Role of the selected user
   const [search, setSearch] = useState("");
   const { data: users, isLoading } = useQuery({
-    queryKey: ["users", search, gameId],
+    queryKey: ["users", search],
     queryFn: async () => {
       if (!search) return [];
       const allUsers = await searchUsers({

@@ -1,16 +1,39 @@
+"use client";
 import Link from "next/link";
 import { Avatar } from "./avatar";
 import { User } from "@/lib/session";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useState } from "react";
+import { Button } from "./ui/button";
 
-export async function AvatarDropdown({ user }: { user: User | null }) {
+export function AvatarDropdown({ user }: { user: User | null }) {
   return user ? <UserDropdown user={user} /> : <GuestDropdown />;
 }
 
-async function UserDropdown({ user }: { user: User }) {
+function UserDropdown({ user }: { user: User }) {
+  const [popoverOpen, setPopoverOpen] = useState(false);
   return (
-    <Link href={`/profile/${user.username}`}>
-      <Avatar user={user} className="size-9" />
-    </Link>
+    <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+      <PopoverTrigger asChild>
+        <Button variant="ghost" className="h-10 w-10 p-0">
+          <Avatar user={user} />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="p-0">
+        <ul className="flex flex-col gap-1 p-4">
+          <li className="text-sm font-medium text-muted-foreground hover:bg-secondary/90 rounded-md p-2">
+            <Link href={`/profile/${user.username}`}>See my profile</Link>
+          </li>
+          <li className="text-sm font-medium text-muted-foreground hover:bg-secondary/90 rounded-md p-2">
+            <Link href={`/auth/logout`}>Logout</Link>
+          </li>
+        </ul>
+      </PopoverContent>
+    </Popover>
   );
 }
 

@@ -27,7 +27,13 @@ export async function TagsList({
           {edit && <RemoveTag gameId={game.id} tagId={tag.id} />}
         </Badge>
       ))}
-      {edit && <AddTag gameId={game.id} tags={(await getAllTags()).tags} />}
+      {edit && (
+        <AddTag
+          gameId={game.id}
+          tags={(await getAllTags()).tags}
+          currentTags={tags}
+        />
+      )}
     </div>
   );
 }

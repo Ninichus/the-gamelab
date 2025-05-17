@@ -1,7 +1,7 @@
 "use server";
 import { db } from "@/db";
 import { eq } from "drizzle-orm";
-import { tags as tagsTable, users } from "@/db/schema";
+import { tags as tagsTable } from "@/db/schema";
 import { canRead } from "@/lib/permissions";
 
 export async function getTags(gameId: string): Promise<

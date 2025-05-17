@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { and, eq } from "drizzle-orm";
 import { tags } from "@/db/schema";
 import { canWrite } from "@/lib/permissions";
+import { revalidatePath } from "next/cache";
 
 export async function removeTag({
   gameId,
@@ -23,5 +24,6 @@ export async function removeTag({
     return { success: false, error: "Failed to remove tag" };
   }
 
+  revalidatePath(`/game/${gameId}`);
   return { success: true };
 }
