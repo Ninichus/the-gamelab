@@ -1,0 +1,3 @@
+approvedPackages:
+  - name: esbuild
+  - name: sharp
