@@ -16,7 +16,8 @@ export function RemoveAuthor({
       size="icon"
       className="group size-8 p-0"
       onClick={async () => {
-        const result = await removeAuthor({ gameId, userId });
+        await removeAuthor({ gameId, userId });
+        //TODO Handle error
       }}
     >
       <X className="size-5 group-hover:text-destructive" />

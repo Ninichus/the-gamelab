@@ -24,6 +24,8 @@ export async function editAuthor({
       .set({ role })
       .where(and(eq(authors.userId, userId), eq(authors.gameId, gameId)));
   } catch (error) {
+    console.error("Error updating author role:", error);
+    // TODO Handle the error as needed (e.g., log it, throw an error, etc.)
     return { success: false, error: "Failed to update role" };
   }
 

@@ -24,7 +24,7 @@ export async function GameCarousel({
         options={options}
         slides={slides.slides}
         gameId={game.id}
-        edit
+        edit={edit}
       />
     </div>
   );

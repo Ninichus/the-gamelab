@@ -29,6 +29,7 @@ export async function searchGames({
     .offset(offset);
 
   //TODO:hanfle filters
+  //TODO : handle tags
 
   return games;
 }

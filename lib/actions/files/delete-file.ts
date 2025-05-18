@@ -1,6 +1,6 @@
 "use server";
 import { db } from "@/db";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { files } from "@/db/schema";
 import { canWrite } from "@/lib/permissions";
 import { revalidatePath } from "next/cache";

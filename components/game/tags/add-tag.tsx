@@ -29,7 +29,6 @@ export function AddTag({
   currentTags: { name: string }[];
 }) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
   return (

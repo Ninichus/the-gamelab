@@ -21,6 +21,8 @@ export async function removeAuthor({
       .delete(authors)
       .where(and(eq(authors.gameId, gameId), eq(authors.userId, userId)));
   } catch (error) {
+    console.error("Error deleting author:", error);
+    // TODO Handle the error as needed (e.g., log it, throw an error, etc.)
     return { success: false, error: "Failed to remove author" };
   }
 

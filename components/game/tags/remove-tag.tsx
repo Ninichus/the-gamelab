@@ -16,10 +16,11 @@ export function RemoveTag({
       size="icon"
       className="group size-4 p-0"
       onClick={async () => {
-        const result = await removeTag({
+        await removeTag({
           gameId,
           tagId,
         });
+        //TODO Handle error
       }}
     >
       <X className="size-3 group-hover:text-destructive" />

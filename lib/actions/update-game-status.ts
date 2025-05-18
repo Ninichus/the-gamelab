@@ -33,6 +33,8 @@ export async function updateGameStatus({ gameId }: { gameId: string }) {
       .set({ status: newStatus })
       .where(eq(games.id, gameId));
   } catch (error) {
+    console.error("Error updating game status:", error);
+    // TODO Handle the error as needed (e.g., log it, throw an error, etc.)
     return { success: false, error: "Failed to update game status" };
   }
 

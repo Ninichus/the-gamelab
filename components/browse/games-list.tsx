@@ -7,7 +7,7 @@ type Game = {
   name: string;
   type: "board_game" | "cards_game" | "video_game";
   status: string;
-  tags: string[];
+  tags?: string[];
 };
 
 const legend = {
@@ -28,11 +28,12 @@ export function GamesList({ games }: { games: Game[] }) {
             <span className="text-sm font-medium">{game.name}</span>
             <Badge className="text-xs">{legend[game.type]}</Badge>
             <Badge className="text-xs">{game.status}</Badge>
-            {game.tags.map((tag) => (
-              <Badge key={tag} className="text-xs">
-                {tag}
-              </Badge>
-            ))}
+            {game.tags &&
+              game.tags.map((tag) => (
+                <Badge key={tag} className="text-xs">
+                  {tag}
+                </Badge>
+              ))}
           </Link>
         </li>
       ))}

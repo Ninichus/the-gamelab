@@ -17,12 +17,21 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
-export function SearchBar({ setGames }: { setGames: (games: any[]) => void }) {
+type Game = {
+  id: string;
+  name: string;
+  type: "board_game" | "cards_game" | "video_game";
+  status: string;
+  tags?: string[];
+};
+
+export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [selectedFilters, setSelectedFilters] = useState([]); // Filters while the dialog is open
   const [filters, setFilters] = useState([]); //Filters used to query
-  const { data: games, isLoading } = useQuery({
+  useQuery({
+    //TODO : use isLoading to show a loading state
     queryKey: ["games", search, filters],
     queryFn: async () => {
       if (!search) return [];

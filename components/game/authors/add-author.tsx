@@ -157,11 +157,12 @@ export function AddAuthor({
             onClick={async () => {
               if (!value) return;
 
-              const result = await addAuthor({
+              await addAuthor({
                 gameId,
                 userId: parseInt(value),
                 role: roleValue !== "" ? roleValue : undefined,
               });
+              //TODO: Handle error
               setOpen(false);
               setValue("");
               setSearch("");

@@ -62,11 +62,12 @@ export function EditAuthor({
           </DialogClose>
           <Button
             onClick={async () => {
-              const result = await editAuthor({
+              await editAuthor({
                 gameId,
                 userId: authorId,
                 role: roleValue !== "" ? roleValue : undefined,
               });
+              //TODO: Handle error
               setOpen(false);
               setRoleValue("");
             }}

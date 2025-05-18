@@ -9,7 +9,7 @@ type Game = {
   name: string;
   type: "board_game" | "cards_game" | "video_game";
   status: string;
-  tags: string[];
+  tags?: string[];
 };
 
 export default function BrowsePage() {

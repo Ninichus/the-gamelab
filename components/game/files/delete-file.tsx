@@ -16,10 +16,11 @@ export function DeleteFile({
       size="icon"
       className="group size-4 p-0"
       onClick={async () => {
-        const result = await deleteFile({
+        await deleteFile({
           gameId,
           fileId,
         });
+        //TODO Handle error
       }}
     >
       <X className="size-3 group-hover:text-destructive" />

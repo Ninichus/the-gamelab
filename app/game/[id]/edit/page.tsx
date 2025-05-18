@@ -60,7 +60,7 @@ export default async function EditGamePage({
       <EditGameBanner
         game={{ id: game.id, status: game.status }}
         showEditButton={false}
-        isAdmin={user.isAdmin}
+        //isAdmin={user.isAdmin}
       />
       <div className="flex items-center justify-between mb-4">
         <EditGameName game={{ id: game.id, name: game.name }} />

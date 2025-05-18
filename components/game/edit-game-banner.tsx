@@ -15,11 +15,9 @@ const legend = {
 export function EditGameBanner({
   game,
   showEditButton = true,
-  isAdmin = false,
 }: {
   game: { id: string; status: "published" | "private" | "pending" };
   showEditButton?: boolean;
-  isAdmin?: boolean;
 }) {
   return (
     <Card className="border-primary">
