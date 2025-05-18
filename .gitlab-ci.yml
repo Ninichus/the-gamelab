@@ -8,6 +8,8 @@ variables:
 
 lint:
   stage: lint
+  image:
+    name: node:22-alpine
   before_script:
     - npm install -g corepack@latest
     - corepack enable
