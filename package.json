@@ -61,7 +61,7 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "eslint",
+      "esbuild",
       "sharp"
     ]
   }
