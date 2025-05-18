@@ -12,6 +12,12 @@ build:
     entrypoint: [""]
   script:
     - echo "Building the app..."
+    - echo "IMAGE = '$IMAGE'"
+    - echo "CI_REGISTRY = '$CI_REGISTRY'"
+    - echo "CI_REGISTRY_IMAGE = '$CI_REGISTRY_IMAGE'"
+    - echo "CI_COMMIT_SHORT_SHA = '$CI_COMMIT_SHORT_SHA'"
+    - echo "Sanitized IMAGE name:"
+    - echo "$IMAGE" | tr -cd 'a-z0-9_-./'
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$DOCKER_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile" --destination "${IMAGE}:${CI_COMMIT_SHORT_SHA}" --destination "${IMAGE}:latest"
