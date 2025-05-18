@@ -1,9 +1,27 @@
 stages:
+  - lint
   - build
 
 variables:
   DOCKER_REGISTRY: $CI_REGISTRY
   IMAGE: $CI_REGISTRY_IMAGE
+
+lint:
+  stage: lint
+  before_script:
+    - npm install -g corepack@latest
+    - corepack enable
+    - corepack prepare pnpm@latest --activate
+    - pnpm config set store-dir .pnpm-store
+  script:
+    - pnpm install
+    - pnpm lint
+  cache:
+    - key:
+        files:
+          - pnpm-lock.yaml
+      paths:
+        - .pnpm-store
 
 build:
   stage: build

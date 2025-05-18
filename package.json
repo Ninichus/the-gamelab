@@ -8,7 +8,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint && tsc --noEmit",
     "db:generate-migrations": "npx drizzle-kit generate",
     "db:apply-migrations": "npx drizzle-kit migrate",
     "db:studio": "drizzle-kit studio"
