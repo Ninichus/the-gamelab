@@ -1,4 +1,3 @@
-"use server";
 import { canRead } from "@/lib/permissions";
 import { getFile } from "@/lib/client-s3";
 import { db } from "@/db";

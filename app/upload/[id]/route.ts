@@ -1,4 +1,3 @@
-"use server";
 import { getUser } from "@/lib/session";
 import { canWrite } from "@/lib/permissions";
 import { uploadFile } from "@/lib/client-s3";
