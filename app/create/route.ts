@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 
 const nanoid = customAlphabet("1234567890abcdef");
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   //TODO : generate a gameid and redirect to the game page
   const user = await getUser();

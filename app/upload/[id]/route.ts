@@ -8,6 +8,8 @@ import { files } from "@/db/schema";
 import { customAlphabet } from "nanoid";
 import { NextRequest } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 const nanoid = customAlphabet("1234567890abcdef");
 
 const maxFileSize = {
