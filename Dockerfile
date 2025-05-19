@@ -12,7 +12,7 @@ ENV NODE_ENV=production
 
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json* pnpm-lock.yaml* .npmrc* ./
-RUN corepack enable pnpm && pnpm i --frozen-lockfile;
+RUN corepack enable pnpm && pnpm i --frozen-lockfile --prod;
 
 
 # Rebuild the source code only when needed
