@@ -1,0 +1,25 @@
+{
+  "name": "@repo/db",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch --preserveWatchOutput",
+    "build": "tsc",
+    "db:studio": "drizzle-kit studio",
+    "db:generate-migrations": "drizzle-kit generate",
+    "db:apply-migrations": "drizzle-kit migrate"
+  },
+  "dependencies": {
+    "dotenv":"*",
+    "drizzle-orm": "^0.38.3",
+    "mysql2": "^3.12.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "drizzle-kit": "^0.30.1",
+    "eslint": "^9.17.0",
+    "typescript": "^5.7.2"
+  }
+}
