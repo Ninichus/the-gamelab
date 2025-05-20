@@ -4,12 +4,12 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-WORKDIR /app
+WORKDIR /app/db
 
-COPY package.json ./
+COPY package.json .
 RUN pnpm install
 
-COPY ./migrations ./db/migrations
+COPY ./migrations .
 COPY drizzle.config.ts .
 
 CMD ["pnpm", "run", "db:apply-migrations"]
