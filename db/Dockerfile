@@ -6,10 +6,10 @@ RUN corepack enable
 
 WORKDIR /app/db
 
-COPY package.json .
+COPY /app/db/package.json ./package.json
 RUN pnpm install
 
-COPY ./migrations .
-COPY drizzle.config.ts .
+COPY /app/db/migrations ./migrations
+COPY drizzle.config.ts ./drizzle.config.ts
 
 CMD ["pnpm", "run", "db:apply-migrations"]
