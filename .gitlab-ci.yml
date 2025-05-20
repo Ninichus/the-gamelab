@@ -34,7 +34,7 @@ build:web:
     - echo "Building the app..."
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$DOCKER_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile" --destination "${IMAGE}:${CI_COMMIT_SHORT_SHA}" --destination "${IMAGE}:latest"
+    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/Dockerfile" --destination "${IMAGE}/web:${CI_COMMIT_SHORT_SHA}" --destination "${IMAGE}/web:latest"
 
 build:database-migrations:
   stage: build
@@ -45,4 +45,4 @@ build:database-migrations:
     - echo "Building the app..."
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$DOCKER_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/db/Dockerfile" --destination "${IMAGE}-db:${CI_COMMIT_SHORT_SHA}" --destination "${IMAGE}-db:latest"
+    - /kaniko/executor --context "${CI_PROJECT_DIR}" --dockerfile "${CI_PROJECT_DIR}/db/Dockerfile" --destination "${IMAGE}/db:${CI_COMMIT_SHORT_SHA}" --destination "${IMAGE}/db:latest"
