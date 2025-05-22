@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "next lint && tsc --noEmit",
     "db:generate-migrations": "npx drizzle-kit generate",
-    "db:apply-migrations": "npx drizzle-kit migrate",
+    "db:apply-migrations": "npx drizzle-kit migrate --config ./db/drizzle.config.ts",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
