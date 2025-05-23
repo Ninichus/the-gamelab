@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is the repository of The Gamelab, a website created in 2025 for the eponym course. Its aim is to store games built by students taking this class.
 
-## Getting Started
+## Architecture
 
-First, run the development server:
+The website is created in NextJS, using Typescript. It works along with a mysql (mariadb) database, as well as a MinIO Objects storage.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Testing in local
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Clone this repo
+- Create a .env file, non-versioned, whith sensitive environnment variables.
+- Start a temporary database as well as a MinIO instance with `docker compose up -d`
+- Apply migrations with `pnpm db:apply-migrations`
+- Start the server with `pnpm dev`
+- Open the website at [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+If you change the schema of the database, you need to generate migrations with `pnpm db:generate-migrations`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+When pushing to the gitlab, a CI/CD pipeline runs and automatically builds 2 docker images :
 
-To learn more about Next.js, take a look at the following resources:
+- db-migrations
+- web
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The first one contains everything necessary to apply migrations in production.
+The second one contains the web application.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Upon completion, those images are stored on gitlab's container registry.
 
-## Deploy on Vercel
+Then, a webhook sends an http post request to the production server. The latter pulls new images and restarts everything.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+A nginx service runs on the server, handling routes. It redirects the-gamelab.cs-campus.fr toward gamelab.cs-campus.fr, and forces https.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Authentication
+
+We use ViaRézo's Oauth2 system to authenticate users.
+Some pages are protected, only some users can access them, while others are public.
+A middleware ensures private pages are not accessible by a non-connected user. Then a second layer, depending on the page, checks if the connected user is authorized.
