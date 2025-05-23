@@ -9,7 +9,7 @@ WORKDIR /db
 COPY /db/package.json .
 RUN pnpm install
 
-COPY /db/migrations/* ./migrations/
+COPY /db/migrations/ ./migrations/
 COPY /db/drizzle.config.ts .
 
 CMD ["pnpm", "run", "db:apply-migrations"]
