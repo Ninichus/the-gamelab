@@ -35,7 +35,7 @@ export async function middleware(request: NextRequest) {
   const session = await getSession();
 
   if (!session.user) {
-    return redirectToLogin(request.url);
+    return redirectToLogin(request.nextUrl.pathname);
   }
 
   let updatedSession: string | null = null;
@@ -57,17 +57,17 @@ export async function middleware(request: NextRequest) {
         value: updatedSession,
       });
     } catch {
-      return redirectToLogin(request.url);
+      return redirectToLogin(request.nextUrl.pathname);
     }
   }
 
   const user = session.user;
 
-  const pathname = new URL(request.url).pathname;
+  const pathname = request.nextUrl.pathname;
 
   if (pathname.startsWith("/manage")) {
     if (!user.isAdmin) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/", process.env.WEB_URL!));
     }
   }
 

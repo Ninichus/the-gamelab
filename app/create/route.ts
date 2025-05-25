@@ -3,6 +3,7 @@ import { customAlphabet } from "nanoid";
 import { db } from "@/db";
 import { games, authors } from "@/db/schema/";
 import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 
 const nanoid = customAlphabet("1234567890abcdef");
 
@@ -36,5 +37,7 @@ export async function GET() {
     return new Response("Error creating game", { status: 500 });
   }
 
-  redirect(`/game/${gameId}/edit`);
+  return NextResponse.redirect(
+    new URL(`/game/${gameId}/edit`, process.env.WEB_URL)
+  );
 }

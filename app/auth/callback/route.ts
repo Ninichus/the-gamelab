@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import * as client from "openid-client";
 import { getCodeVerifierSession, getSession } from "@/lib/session";
@@ -56,7 +56,7 @@ export async function GET(request: Request) {
   const cookiesStore = await cookies();
   const redirectTo = cookiesStore.get("redirectTo")?.value || "/";
   cookiesStore.delete("redirectTo");
-  redirect(redirectTo);
+  return NextResponse.redirect(new URL(redirectTo, webUrl));
 }
 
 type OIDCUser = {
