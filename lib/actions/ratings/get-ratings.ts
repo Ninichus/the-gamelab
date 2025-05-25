@@ -1,6 +1,6 @@
 "use server";
 import { db } from "@/db";
-import { eq, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { ratings as ratingsTable } from "@/db/schema";
 import { canRead } from "@/lib/permissions";
 import { getUser } from "@/lib/session";

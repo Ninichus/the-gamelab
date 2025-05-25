@@ -2,7 +2,6 @@ import { getUser } from "@/lib/session";
 import { customAlphabet } from "nanoid";
 import { db } from "@/db";
 import { games, authors } from "@/db/schema/";
-import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 
 const nanoid = customAlphabet("1234567890abcdef");

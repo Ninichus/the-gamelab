@@ -82,11 +82,10 @@ export function AddAuthor({
         <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
           <PopoverTrigger asChild>
             <Button
-              className="cursor-pointer"
               variant="outline"
               role="combobox"
               aria-expanded={popoverOpen}
-              className="w-full justify-between"
+              className="w-full justify-between cursor-pointer"
             >
               {selectedUser
                 ? selectedUser.firstName + " " + selectedUser.lastName

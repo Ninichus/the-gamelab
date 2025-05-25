@@ -23,7 +23,8 @@ interface RatingsProps extends React.HTMLAttributes<HTMLDivElement> {
   totalStars?: number;
   size?: number;
   fill?: boolean;
-  Icon?: React.ReactElement;
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Icon?: React.ReactElement<any>;
   variant?: keyof typeof ratingVariants;
   onRatingChange?: (rating: number) => void;
 }
@@ -40,10 +41,10 @@ export const CommentRatings = ({
 }: RatingsProps) => {
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [currentRating, setCurrentRating] = useState(initialRating);
-  const [isHovering, setIsHovering] = useState(false);
+  //const [isHovering, setIsHovering] = useState(false);
 
   const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
-    setIsHovering(true);
+    //setIsHovering(true);
     const starIndex = parseInt(
       (event.currentTarget as HTMLDivElement).dataset.starIndex || "0"
     );
@@ -51,7 +52,7 @@ export const CommentRatings = ({
   };
 
   const handleMouseLeave = () => {
-    setIsHovering(false);
+    //setIsHovering(false);
     setHoverRating(null);
   };
 
@@ -118,7 +119,8 @@ interface PartialStarProps {
   fillPercentage: number;
   size: number;
   className?: string;
-  Icon: React.ReactElement;
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Icon: React.ReactElement<any>;
 }
 
 const PartialStar = ({ ...props }: PartialStarProps) => {

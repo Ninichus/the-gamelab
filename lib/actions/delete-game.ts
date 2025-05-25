@@ -4,7 +4,6 @@ import { eq } from "drizzle-orm";
 import { games, files as filesTable } from "@/db/schema";
 import { canWrite } from "@/lib/permissions";
 import { deleteFile as deleteFileFromS3 } from "../client-s3";
-import { revalidatePath } from "next/cache";
 
 export async function deleteGame(gameId: string) {
   const [game] = await db

@@ -12,6 +12,7 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { addComment } from "@/lib/actions/comments/add-comment";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
   comment: z
@@ -24,7 +25,9 @@ const formSchema = z.object({
 //TODO : loading state on button
 
 export function AddComment({ gameId }: { gameId: string }) {
-  const form = useForm<z.infer<typeof formSchema>>();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  });
 
   return (
     <Form {...form}>
