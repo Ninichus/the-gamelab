@@ -12,9 +12,10 @@ import { GameType } from "@/components/game/game-type";
 import { buildTabs } from "@/lib/actions/build-tabs";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { EditGameBanner } from "@/components/game/edit-game-banner";
+import { RatingCard } from "@/components/game/rating/rating-card";
 
 //TODO use canRead and redirect accordingly
-//TODO give a mark
+//TODO give a rating
 //TODO add a comment
 
 export default async function GamePage({
@@ -80,16 +81,22 @@ export default async function GamePage({
       {canEdit && (
         <EditGameBanner game={{ id: game.id, status: game.status }} />
       )}
-      <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-        {game.name}
-      </h1>
-      <GameType game={{ id: game.id, type: game.type }} />
-      <TagsList game={{ id: game.id }} />
+      <div className="flex justify-between pt-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            {game.name}
+          </h1>
+          <GameType game={{ id: game.id, type: game.type }} />
+          <TagsList game={{ id: game.id }} />
+        </div>
+        <RatingCard gameId={game.id} />
+      </div>
+
       <GameCarousel game={{ id: game.id }} />
       <Tabs defaultValue="description" className="w-full">
         <TabsList>
           {Object.entries(tabs).map(([key, { display, icon }]) => (
-            <TabsTrigger key={key} value={key} className="gap-1">
+            <TabsTrigger key={key} value={key} className="gap-1 cursor-pointer">
               {icon}
               {display}
             </TabsTrigger>
@@ -102,7 +109,7 @@ export default async function GamePage({
         ))}
       </Tabs>
 
-      <CommentsSection />
+      <CommentsSection game={{ id: gameId }} />
     </>
   );
 }
