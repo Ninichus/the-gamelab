@@ -34,7 +34,7 @@ export async function FilesList({
               <span className="text-xs text-slate-500 dark:text-slate-400">
                 {file.downloadCount} downloads
               </span>
-              <Link href={`/download/${file.id}`}>
+              <Link href={`/download/${file.id}`} prefetch={false}>
                 <span className="text-xs text-blue-500 dark:text-blue-400">
                   Download
                 </span>
