@@ -66,7 +66,7 @@ export function AddAuthor({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
+        <Button className="cursor-pointer w-full" variant="outline">
           <Plus className="mr-2 h-4 w-4" />
           Add an author
         </Button>
@@ -82,6 +82,7 @@ export function AddAuthor({
         <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
           <PopoverTrigger asChild>
             <Button
+              className="cursor-pointer"
               variant="outline"
               role="combobox"
               aria-expanded={popoverOpen}
@@ -151,7 +152,9 @@ export function AddAuthor({
 
         <DialogFooter className="flex justify-between sm:justify-between gap-2">
           <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary" className="cursor-pointer">
+              Cancel
+            </Button>
           </DialogClose>
           <Button
             onClick={async () => {

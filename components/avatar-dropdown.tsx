@@ -19,18 +19,23 @@ function UserDropdown({ user }: { user: User }) {
   return (
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
       <PopoverTrigger asChild>
-        <Button variant="ghost" className="h-10 w-10 p-0">
+        <Button variant="ghost" className="h-10 w-10 p-0 cursor-pointer">
           <Avatar user={user} />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="p-0">
         <ul className="flex flex-col gap-1 p-4">
-          <li className="text-sm font-medium text-muted-foreground hover:bg-secondary/90 rounded-md p-2">
-            <Link href={`/profile/${user.username}`}>See my profile</Link>
-          </li>
-          <li className="text-sm font-medium text-muted-foreground hover:bg-secondary/90 rounded-md p-2">
-            <Link href={`/auth/logout`}>Logout</Link>
-          </li>
+          <Link href={`/profile/${user.username}`}>
+            <li className="text-sm font-medium text-muted-foreground hover:bg-secondary/90 rounded-md p-2">
+              See my profile
+            </li>
+          </Link>
+
+          <Link href={`/auth/logout`}>
+            <li className="text-sm font-medium text-muted-foreground hover:bg-secondary/90 rounded-md p-2">
+              Logout
+            </li>
+          </Link>
         </ul>
       </PopoverContent>
     </Popover>

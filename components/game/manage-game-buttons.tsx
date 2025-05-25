@@ -10,13 +10,13 @@ export function ManageGameButtons({
 }) {
   return (
     <>
-      <Button>
-        <Link href={`/game/${game.id}`}>Preview</Link>
-      </Button>
+      <Link href={`/game/${game.id}`}>
+        <Button className="cursor-pointer">Preview</Button>
+      </Link>
 
       <Button
         variant="outline"
-        className="ml-2"
+        className="ml-2 cursor-pointer"
         disabled={game.status === "pending"}
         onClick={async () => {
           await updateGameStatus({ gameId: game.id });

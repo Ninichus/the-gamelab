@@ -44,6 +44,11 @@ export async function FilesList({
           </li>
         ))}
       </ul>
+      {result.files.length === 0 && (
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          No files uploaded yet.
+        </p>
+      )}
       {edit && <AddFile gameId={game.id} index={result.files.length} />}
     </>
   );

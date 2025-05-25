@@ -22,7 +22,7 @@ export function AddFile({ gameId, index }: { gameId: string; index: number }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full">
+        <Button variant="outline" className="w-full cursor-pointer">
           <Plus />
           Add a file
         </Button>
@@ -71,9 +71,14 @@ export function AddFile({ gameId, index }: { gameId: string; index: number }) {
             <Input
               type="file"
               onChange={(e) => setFile(e.target.files?.[0] || null)}
+              className="cursor-pointer"
             />
             <div>
-              <Button type="submit" disabled={!file || isUploading}>
+              <Button
+                type="submit"
+                disabled={!file || isUploading}
+                className="cursor-pointer"
+              >
                 Upload
               </Button>
               {isUploading && (

@@ -26,9 +26,11 @@ export function EditGameBanner({
       </CardHeader>
       {showEditButton && (
         <CardContent className="flex gap-2 flex-col-reverse sm:flex-row">
-          <Button size="sm">
-            <Link href={`/game/${game.id}/edit`}>Edit</Link>
-          </Button>
+          <Link href={`/game/${game.id}/edit`}>
+            <Button className="cursor-pointer" size="sm">
+              Edit
+            </Button>
+          </Link>
         </CardContent>
       )}
     </Card>
@@ -40,6 +42,7 @@ export function EditGameBanner({
   <Button
     size="sm"
     variant="outline"
+    className="cursor-pointer"
     onClick={async () => {
       await approveGame(game.id);
     }}

@@ -14,7 +14,7 @@ export function RemoveAuthor({
     <Button
       variant="ghost"
       size="icon"
-      className="group size-8 p-0"
+      className="group size-8 p-0 cursor-pointer"
       onClick={async () => {
         await removeAuthor({ gameId, userId });
         //TODO Handle error

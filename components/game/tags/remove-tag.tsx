@@ -14,7 +14,7 @@ export function RemoveTag({
     <Button
       variant="ghost"
       size="icon"
-      className="group size-4 p-0"
+      className="group size-4 p-0 cursor-pointer"
       onClick={async () => {
         await removeTag({
           gameId,

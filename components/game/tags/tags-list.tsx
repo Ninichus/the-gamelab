@@ -20,7 +20,7 @@ export async function TagsList({
   }
   const tags = result.tags;
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-wrap items-center gap-1 mt-1">
       {tags.map((tag) => (
         <Badge key={tag.id}>
           {tag.name}

@@ -54,7 +54,7 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
       />
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button>
+          <Button className="curson-pointer">
             <Funnel className="mr-2 h-4 w-4" />
             Filter
           </Button>
@@ -70,6 +70,7 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
             <DialogClose asChild>
               <Button
                 variant="secondary"
+                className="cursor-pointer"
                 onClick={() => {
                   setOpen(false);
                   setSelectedFilters(filters);
@@ -79,6 +80,7 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
               </Button>
             </DialogClose>
             <Button
+              className="cursor-pointer"
               onClick={() => {
                 setOpen(false);
                 setFilters(selectedFilters);

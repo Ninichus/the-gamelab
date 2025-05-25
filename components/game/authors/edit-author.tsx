@@ -29,7 +29,7 @@ export function EditAuthor({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
+        <Button className="cursor-pointer">
           <PencilLine className="mr-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
@@ -58,7 +58,9 @@ export function EditAuthor({
 
         <DialogFooter className="flex justify-between sm:justify-between gap-2">
           <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary" className="cursor-pointer">
+              Cancel
+            </Button>
           </DialogClose>
           <Button
             onClick={async () => {

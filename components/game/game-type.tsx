@@ -33,12 +33,12 @@ export function GameType({
           value: "board_game" | "cards_game" | "video_game"
         ) => await updateGameType(game.id, value)}
       >
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-[180px] cursor-pointer">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
           {Object.entries(legend).map(([key, value]) => (
-            <SelectItem key={key} value={key}>
+            <SelectItem key={key} value={key} className="cursor-pointer">
               {value}
             </SelectItem>
           ))}

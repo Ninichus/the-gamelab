@@ -30,13 +30,7 @@ export async function deleteFile({
     });
   } catch (error) {
     console.error("Error deleting file", error);
-    return Response.json(
-      {
-        success: false,
-        error: "Error deleting file",
-      },
-      { status: 500 }
-    );
+    return { success: false, error: "Error deleting file" };
   }
 
   revalidatePath(`/game/${gameId}`);

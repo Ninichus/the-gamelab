@@ -152,9 +152,14 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                         type="file"
                         accept="image/*,video/*"
                         onChange={(e) => setFile(e.target.files?.[0] || null)}
+                        className="cursor-pointer"
                       />
                       <div>
-                        <Button type="submit" disabled={!file || isUploading}>
+                        <Button
+                          type="submit"
+                          disabled={!file || isUploading}
+                          className="cursor-pointer"
+                        >
                           Upload
                         </Button>
                         {isUploading && (
