@@ -13,6 +13,9 @@ import { GameType } from "@/components/game/game-type";
 import { GameCarousel } from "@/components/game/carousel/game-carousel";
 import { EditGameBanner } from "@/components/game/edit-game-banner";
 import { ManageGameButtons } from "@/components/game/manage-game-buttons";
+import { DeleteGameBanner } from "@/components/game/delete-game";
+
+//TODO better error handling + use canWrite and redirect accordingly
 
 export default async function EditGamePage({
   params,
@@ -62,15 +65,16 @@ export default async function EditGamePage({
         showEditButton={false}
         //isAdmin={user.isAdmin}
       />
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mt-4 mb-2">
         <EditGameName game={{ id: game.id, name: game.name }} />
         <div>
           <ManageGameButtons game={{ status: game.status, id: gameId }} />
         </div>
       </div>
-
-      <GameType game={{ id: game.id, type: game.type }} edit={true} />
-      <TagsList game={{ id: game.id }} edit={true} />
+      <div className="mt-2 flex flex-col gap-2">
+        <GameType game={{ id: game.id, type: game.type }} edit={true} />
+        <TagsList game={{ id: game.id }} edit={true} />
+      </div>
       <GameCarousel game={{ id: game.id }} edit={true} />
       <Tabs defaultValue="description" className="w-full">
         <TabsList>
@@ -87,6 +91,7 @@ export default async function EditGamePage({
           </TabsContent>
         ))}
       </Tabs>
+      <DeleteGameBanner gameId={gameId} />
     </>
   );
 }
