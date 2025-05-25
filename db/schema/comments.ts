@@ -16,10 +16,11 @@ export const comments = mysqlTable(
     id: int("id").autoincrement().primaryKey(),
     author: int("author")
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
     gameId: varchar("game_id", { length: 40 })
       .notNull()
-      .references(() => games.id),
+      .references(() => games.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    content: varchar("content", { length: 500 }).notNull(),
     status: mysqlEnum("status", ["draft", "pending", "published"]).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
@@ -27,6 +28,7 @@ export const comments = mysqlTable(
   (table) => [
     index("user_idx").on(table.author),
     index("game_idx").on(table.gameId),
+    index("game_author_idx").on(table.gameId, table.author),
   ]
 );
 

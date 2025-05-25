@@ -25,7 +25,10 @@ export const files = mysqlTable(
     downloadCount: int("download_count").default(0).notNull(),
     gameId: varchar("game_id", { length: 40 })
       .notNull()
-      .references(() => games.id),
+      .references(() => games.id, {
+        onDelete: "restrict",
+        onUpdate: "cascade",
+      }),
     userId: int("user_id")
       .notNull()
       .references(() => users.id),

@@ -7,7 +7,7 @@ import {
   text,
 } from "drizzle-orm/mysql-core";
 import { authors } from "./authors";
-import { marks } from "./marks";
+import { ratings } from "./ratings";
 import { comments } from "./comments";
 import { tags } from "./tags";
 import { relations } from "drizzle-orm";
@@ -33,7 +33,7 @@ export const games = mysqlTable(
 
 export const gamesRelations = relations(games, ({ many }) => ({
   authors: many(authors),
-  marks: many(marks),
+  ratings: many(ratings),
   comments: many(comments),
   tags: many(tags),
 }));

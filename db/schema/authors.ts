@@ -12,7 +12,7 @@ export const authors = mysqlTable(
       .references(() => users.id),
     gameId: varchar("game_id", { length: 40 })
       .notNull()
-      .references(() => games.id),
+      .references(() => games.id, { onDelete: "cascade", onUpdate: "cascade" }),
     role: varchar("role", { length: 40 }),
   },
   (table) => [index("user_idx").on(table.userId)]

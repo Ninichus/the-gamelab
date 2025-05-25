@@ -1,7 +1,7 @@
 import { mysqlTable, varchar, int, boolean } from "drizzle-orm/mysql-core";
 import { relations } from "drizzle-orm";
 import { comments } from "./comments";
-import { marks } from "./marks";
+import { ratings } from "./ratings";
 import { authors } from "./authors";
 
 export const users = mysqlTable("users", {
@@ -15,7 +15,7 @@ export const users = mysqlTable("users", {
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
-  marks: many(marks),
+  ratings: many(ratings),
   authors: many(authors),
   comments: many(comments),
 }));

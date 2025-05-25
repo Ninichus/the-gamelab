@@ -9,9 +9,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint && tsc --noEmit",
-    "db:generate-migrations": "npx drizzle-kit generate",
+    "db:generate-migrations": "npx drizzle-kit generate --config ./db/drizzle.config.ts",
     "db:apply-migrations": "npx drizzle-kit migrate --config ./db/drizzle.config.ts",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio --config ./db/drizzle.config.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.806.0",
@@ -42,6 +42,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.56.3",
+    "recharts": "^2.15.3",
     "tailwind-merge": "^3.2.0",
     "zod": "^3.24.4"
   },
