@@ -71,7 +71,7 @@ export default async function EditGamePage({
           <ManageGameButtons game={{ status: game.status, id: gameId }} />
         </div>
       </div>
-      <div className="mt-2 flex flex-col gap-2">
+      <div className="my-2 flex flex-col gap-2">
         <GameType game={{ id: game.id, type: game.type }} edit={true} />
         <TagsList game={{ id: game.id }} edit={true} />
       </div>
