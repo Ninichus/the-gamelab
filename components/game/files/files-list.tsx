@@ -31,7 +31,7 @@ export async function FilesList({
                 {file.name}
               </span>
               <span className="text-xs text-slate-500 dark:text-slate-400">
-                {file.downloadCount} downloads
+                {file.downloadCount} download{file.downloadCount > 1 ? "s" : ""}
               </span>
               <a href={`/download/${file.id}`} download>
                 <span className="text-xs text-blue-500 dark:text-blue-400">
