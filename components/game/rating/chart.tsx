@@ -16,7 +16,6 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function RatingChart({ averageRating }: { averageRating?: number }) {
-  console.log(averageRating);
   return (
     <ChartContainer
       config={chartConfig}

@@ -18,7 +18,7 @@ export async function MainNav({
             key={link.href}
             href={link.href}
             className="text-sm font-medium text-muted-foreground hover:text-foreground"
-            prefetch={link.title !== "Create"}
+            prefetch={link.title !== "Add a Game"}
           >
             {link.title}
           </Link>

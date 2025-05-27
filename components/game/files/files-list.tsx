@@ -34,11 +34,11 @@ export async function FilesList({
               <span className="text-xs text-slate-500 dark:text-slate-400">
                 {file.downloadCount} downloads
               </span>
-              <Link href={`/download/${file.id}`} prefetch={false}>
+              <a href={`/download/${file.id}`} download>
                 <span className="text-xs text-blue-500 dark:text-blue-400">
                   Download
                 </span>
-              </Link>
+              </a>
               {edit && <DeleteFile fileId={file.id} gameId={game.id} />}
             </div>
           </li>

@@ -24,7 +24,7 @@ export const config = {
    */
 
   matcher:
-    "/((?!_next/static|_next/image|favicon.ico|icon.png|icon0.svg|icon1.png|auth|public|manifest.json|robots.txt|browse|contact|profile|$|game|download).*)",
+    "/((?!_next/static|_next/image|favicon.ico|apple-icon.png|icon.png|icon0.svg|icon1.png|auth|public|manifest.json|robots.txt|browse|contact|profile|$|game|download).*)",
 };
 
 //TODO : handle download routes
