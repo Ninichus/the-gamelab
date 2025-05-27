@@ -4,7 +4,6 @@ import { File } from "lucide-react";
 import { Error } from "@/components/error";
 import { DeleteFile } from "./delete-file";
 import { AddFile } from "./add-file";
-import Link from "next/link";
 
 export async function FilesList({
   game,
