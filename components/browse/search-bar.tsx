@@ -54,7 +54,7 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
       />
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button className="curson-pointer">
+          <Button className="cursor-pointer">
             <Funnel className="mr-2 h-4 w-4" />
             Filter
           </Button>
