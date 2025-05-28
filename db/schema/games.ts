@@ -5,6 +5,7 @@ import {
   timestamp,
   index,
   text,
+  float,
 } from "drizzle-orm/mysql-core";
 import { authors } from "./authors";
 import { ratings } from "./ratings";
@@ -27,6 +28,7 @@ export const games = mysqlTable(
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
     specs: varchar("specs", { length: 255 }),
+    averageRating: float("average_rating"),
   },
   (table) => [index("game_idx").on(table.id)]
 );

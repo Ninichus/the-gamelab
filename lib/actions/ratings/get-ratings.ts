@@ -1,7 +1,7 @@
 "use server";
 import { db } from "@/db";
 import { eq } from "drizzle-orm";
-import { ratings as ratingsTable } from "@/db/schema";
+import { ratings as ratingsTable, games } from "@/db/schema";
 import { canRead } from "@/lib/permissions";
 import { getUser } from "@/lib/session";
 
@@ -25,10 +25,11 @@ export async function getRatings(gameId: string): Promise<
     .from(ratingsTable)
     .where(eq(ratingsTable.gameId, gameId));
 
-  const averageRating =
-    ratings.length > 0
-      ? ratings.reduce((sum, rating) => sum + rating.value, 0) / ratings.length
-      : undefined;
+  const [{ averageRating }] = await db
+    .select({ averageRating: games.averageRating })
+    .from(games)
+    .where(eq(games.id, gameId));
+
   const numberOfRatings = ratings.length;
   const userRating = user
     ? ratings.find((r) => r.author === user.id)?.value ?? null
@@ -36,7 +37,7 @@ export async function getRatings(gameId: string): Promise<
 
   return {
     success: true,
-    averageRating,
+    averageRating: averageRating ?? undefined,
     numberOfRatings,
     userRating,
   };

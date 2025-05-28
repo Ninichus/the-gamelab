@@ -1,10 +1,10 @@
 "use server";
 import { db } from "@/db";
-import { ratings } from "@/db/schema";
+import { ratings, games } from "@/db/schema";
 import { canRead } from "@/lib/permissions";
 import { revalidatePath } from "next/cache";
 import { getUser } from "@/lib/session";
-import { eq, and } from "drizzle-orm";
+import { eq, and, avg } from "drizzle-orm";
 
 export async function modifyRating({
   gameId,
@@ -23,7 +23,6 @@ export async function modifyRating({
   }
 
   try {
-    //TODO Validate comments ? draft mode...
     const [existingRating] = await db
       .select()
       .from(ratings)
@@ -42,6 +41,18 @@ export async function modifyRating({
         value: rating,
       });
     }
+
+    const averageRating = await db
+      .select({ averageRating: avg(ratings.value) })
+      .from(ratings)
+      .where(eq(ratings.gameId, gameId))
+      .then(async (rows) => {
+        return rows[0].averageRating !== null
+          ? parseFloat(rows[0].averageRating)
+          : null;
+      });
+
+    await db.update(games).set({ averageRating }).where(eq(games.id, gameId));
   } catch (error) {
     console.error("Error modifying rating:", error);
     // TODO Handle the error as needed (e.g., log it, throw an error, etc.)

@@ -38,6 +38,7 @@ CREATE TABLE `games` (
 	`created_at` timestamp NOT NULL DEFAULT (now()),
 	`updated_at` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
 	`specs` varchar(255),
+	`average_rating` float,
 	CONSTRAINT `games_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint

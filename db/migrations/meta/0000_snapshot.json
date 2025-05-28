@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "3f47909c-c702-4e7c-8ddb-2048e52eb406",
+  "id": "c0ec1b35-d7a1-4e82-b693-6d8ff89a28ca",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "authors": {
@@ -385,6 +385,13 @@
         "specs": {
           "name": "specs",
           "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "average_rating": {
+          "name": "average_rating",
+          "type": "float",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
