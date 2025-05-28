@@ -10,7 +10,11 @@ export async function searchGames({
 }: {
   query: {
     search: string;
-    filters: string[];
+    filters: {
+      type?: "board_game" | "cards_game" | "video_game";
+      averageRating?: [number, number];
+      tags?: string[];
+    };
   };
   limit?: number;
   offset?: number;
