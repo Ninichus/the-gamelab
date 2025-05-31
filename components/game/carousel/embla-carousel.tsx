@@ -81,6 +81,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                       controls
                       autoPlay
                       muted
+                      playsInline
                     >
                       <source src={`/download/${slide.id}`} />
                       Your browser does not support the video tag.
