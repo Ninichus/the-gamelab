@@ -1,13 +1,17 @@
 "use server";
 import { db } from "@/db";
-import { eq, and } from "drizzle-orm";
+import { eq, and, inArray } from "drizzle-orm";
 import { files } from "@/db/schema";
 import { canRead } from "@/lib/permissions";
 
 export async function getSlides(gameId: string): Promise<
   | {
       success: true;
-      slides: { id: string; index: number | null }[];
+      slides: {
+        id: string;
+        index: number | null;
+        type: string;
+      }[];
     }
   | {
       success: false;
@@ -23,10 +27,18 @@ export async function getSlides(gameId: string): Promise<
       .select({
         id: files.id,
         index: files.index,
+        type: files.type,
       })
       .from(files)
       .where(
-        and(eq(files.gameId, gameId), eq(files.type, "carousel_image"))
+        and(
+          eq(files.gameId, gameId),
+          inArray(files.type, [
+            "carousel_image",
+            "carousel_video",
+            "carousel_video_thumbnail",
+          ])
+        )
       )) ?? [];
 
   return {

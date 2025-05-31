@@ -19,7 +19,7 @@ import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 
 type PropType = {
-  slides: { id: string; index: number | null }[];
+  slides: { id: string; index: number | null; type: string }[];
   gameId: string;
   options?: EmblaOptionsType;
   edit?: boolean;
@@ -66,16 +66,35 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
       <div className="embla__viewport" ref={emblaMainRef}>
         <div className="embla__container">
           {slides.length > 0 ? (
-            slides.map((slide, index) => (
-              <div className="embla__slide" key={index}>
-                <Image
-                  src={`/download/${slide.id}`}
-                  alt={`Carousel ${index}`}
-                  width={1920}
-                  height={1080}
-                />
-              </div>
-            ))
+            slides
+              .filter((slide) =>
+                ["carousel_image", "carousel_video"].includes(slide.type)
+              )
+              .map((slide, index) => (
+                <div className="embla__slide" key={index}>
+                  {slide.type === "carousel_video" ? (
+                    <video
+                      className="embla__slide__video"
+                      poster={`/download/${slide.id}-thumbnail`}
+                      width={1920}
+                      height={1080}
+                      controls
+                      autoPlay
+                      muted
+                    >
+                      <source src={`/download/${slide.id}`} />
+                      Your browser does not support the video tag.
+                    </video>
+                  ) : (
+                    <Image
+                      src={`/download/${slide.id}`}
+                      alt={`Carousel ${index}`}
+                      width={1920}
+                      height={1080}
+                    />
+                  )}
+                </div>
+              ))
           ) : (
             <div className="embla__slide" key={0}>
               <div className="embla__slide__number">
@@ -89,14 +108,20 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
       <div className="embla-thumbs">
         <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
           <div className="embla-thumbs__container">
-            {slides.map((slide, index) => (
-              <Thumb
-                key={index}
-                onClick={() => onThumbClick(index)}
-                selected={index === selectedIndex}
-                id={slide.id}
-              />
-            ))}
+            {slides
+              .filter((slide) =>
+                ["carousel_image", "carousel_video_thumbnail"].includes(
+                  slide.type
+                )
+              )
+              .map((slide, index) => (
+                <Thumb
+                  key={index}
+                  onClick={() => onThumbClick(index)}
+                  selected={index === selectedIndex}
+                  id={slide.id}
+                />
+              ))}
             {edit && (
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
@@ -123,7 +148,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                         const xhr = new XMLHttpRequest();
                         xhr.open(
                           "POST",
-                          `/upload/${gameId}?type=carousel_image&index=${slides.length}`,
+                          `/upload/${gameId}?type=carousel_file&index=${slides.length}`,
                           true
                         );
                         xhr.upload.addEventListener("progress", (e) => {

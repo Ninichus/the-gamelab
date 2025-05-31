@@ -5,6 +5,7 @@ import {
   timestamp,
   index,
   int,
+  AnyMySqlColumn,
 } from "drizzle-orm/mysql-core";
 import { games } from "./games";
 import { users } from "./users";
@@ -17,6 +18,8 @@ export const files = mysqlTable(
     name: varchar("name", { length: 255 }).notNull(),
     type: mysqlEnum("type", [
       "carousel_image",
+      "carousel_video",
+      "carousel_video_thumbnail",
       "browse_image",
       "game_archive",
     ]).notNull(),
@@ -32,6 +35,12 @@ export const files = mysqlTable(
     userId: int("user_id")
       .notNull()
       .references(() => users.id),
+    associatedThumbnail: varchar("associated_thumbnail", {
+      length: 40,
+    }).references((): AnyMySqlColumn => files.id, {
+      onDelete: "restrict",
+      onUpdate: "cascade",
+    }),
   },
   (table) => [
     index("files_idx").on(table.id),

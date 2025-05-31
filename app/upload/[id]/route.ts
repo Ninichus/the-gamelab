@@ -12,12 +12,12 @@ export const dynamic = "force-dynamic";
 const nanoid = customAlphabet("1234567890abcdef");
 
 const maxFileSize = {
-  carousel_image: 10 * 1024 * 1024, // 10MB
+  carousel_file: 100 * 1024 * 1024, // 100MB
   browse_image: 10 * 1024 * 1024, // 10MB
   game_archive: 2 * 1024 * 1024 * 1024, // 2GB
 };
 const allowedFileTypes = {
-  carousel_image: ["image/*", "video/*"],
+  carousel_file: ["image/*", "video/*"],
   browse_image: ["image/*", "video/*"],
   game_archive: [],
 };
@@ -33,7 +33,7 @@ export async function POST(
 ) {
   const gameId = (await params).id;
   const type = request?.nextUrl?.searchParams.get("type") as
-    | "carousel_image"
+    | "carousel_file"
     | "browse_image"
     | "game_archive";
   const index = parseInt(request?.nextUrl?.searchParams.get("index") ?? "0");
@@ -84,10 +84,19 @@ export async function POST(
       await tx.insert(files).values({
         id: fileId,
         name: file.name,
-        type,
+        type:
+          type === "carousel_file"
+            ? file.type.match("image/*")
+              ? "carousel_image"
+              : "carousel_video"
+            : type,
         index,
         gameId,
         userId: user.id,
+        associatedThumbnail:
+          type === "carousel_file" && file.type.match("video/*")
+            ? `${fileId}-thumbnail`
+            : null,
       });
 
       try {
@@ -95,6 +104,19 @@ export async function POST(
       } catch (e) {
         console.error("Error uploading file to S3", e);
         tx.rollback();
+      }
+
+      if (type === "carousel_file" && file.type.match("video/*")) {
+        await tx.insert(files).values({
+          id: `${fileId}-thumbnail`,
+          name: `${file.name}-thumbnail`,
+          type: "carousel_video_thumbnail",
+          index,
+          gameId,
+          userId: user.id,
+        });
+        //TODO : extract a thumbnail
+        //TODO : delete thumbnails when game / video deleted
       }
     });
   } catch (error) {
