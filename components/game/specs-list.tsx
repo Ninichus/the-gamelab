@@ -10,6 +10,10 @@ export function SpecsList({
   game: { id: string; specs?: string | null };
   edit?: boolean;
 }) {
+  const handleUpdate = useDebounce((e) =>
+    updateGameSpecs(game.id, e.target.value)
+  );
+
   return (
     <div className="w-full">
       {edit ? (
@@ -17,9 +21,7 @@ export function SpecsList({
           name="description"
           rows={10}
           className="w-full"
-          onChange={useDebounce((e) =>
-            updateGameSpecs(game.id, e.target.value)
-          )}
+          onChange={handleUpdate}
           placeholder={`RAM: 16GB\nCPU: Intel i7\nGPU: NVIDIA RTX 3080\nStorage: 10GB SSD`}
           defaultValue={game.specs ?? ""}
         />
