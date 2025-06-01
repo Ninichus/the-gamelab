@@ -26,23 +26,34 @@ export async function deleteGame(gameId: string) {
         .from(filesTable)
         .where(eq(filesTable.gameId, gameId));
 
-      const sortedFiles = files.sort((a, b) => {
-        const aIsThumbnail = a.type === "carousel_video_thumbnail" ? 0 : 1;
-        const bIsThumbnail = b.type === "carousel_video_thumbnail" ? 0 : 1;
-        return aIsThumbnail - bIsThumbnail;
-      });
-
-      //First delete files uploaded with this game
+      //First delete thumbnails
       await Promise.all(
-        files.map(async (file) => {
-          try {
-            await deleteFileFromS3(file.id);
-            await tx.delete(filesTable).where(eq(filesTable.id, file.id));
-          } catch (e) {
-            console.error("Error deleting file from S3", e);
-            tx.rollback();
-          }
-        })
+        files
+          .filter((file) => file.type === "carousel_video_thumbnail")
+          .map(async (file) => {
+            try {
+              await deleteFileFromS3(file.id);
+              await tx.delete(filesTable).where(eq(filesTable.id, file.id));
+            } catch (e) {
+              console.error("Error deleting file from S3", e);
+              tx.rollback();
+            }
+          })
+      );
+
+      //Then delete other files
+      await Promise.all(
+        files
+          .filter((file) => file.type !== "carousel_video_thumbnail")
+          .map(async (file) => {
+            try {
+              await deleteFileFromS3(file.id);
+              await tx.delete(filesTable).where(eq(filesTable.id, file.id));
+            } catch (e) {
+              console.error("Error deleting file from S3", e);
+              tx.rollback();
+            }
+          })
       );
       await tx.delete(games).where(eq(games.id, gameId));
     });
