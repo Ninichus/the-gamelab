@@ -15,8 +15,6 @@ import { EditGameBanner } from "@/components/game/edit-game-banner";
 import { RatingCard } from "@/components/game/rating/rating-card";
 
 //TODO use canRead and redirect accordingly
-//TODO give a rating
-//TODO add a comment
 
 export default async function GamePage({
   params,

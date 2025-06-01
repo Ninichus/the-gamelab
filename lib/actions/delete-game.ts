@@ -26,6 +26,12 @@ export async function deleteGame(gameId: string) {
         .from(filesTable)
         .where(eq(filesTable.gameId, gameId));
 
+      const sortedFiles = files.sort((a, b) => {
+        const aIsThumbnail = a.type === "carousel_video_thumbnail" ? 0 : 1;
+        const bIsThumbnail = b.type === "carousel_video_thumbnail" ? 0 : 1;
+        return aIsThumbnail - bIsThumbnail;
+      });
+
       //First delete files uploaded with this game
       await Promise.all(
         files.map(async (file) => {

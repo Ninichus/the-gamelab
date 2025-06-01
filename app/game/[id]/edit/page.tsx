@@ -54,10 +54,6 @@ export default async function EditGamePage({
 
   const tabs = await buildTabs({ game, edit: true });
 
-  //TODO : add a banner button
-  //TODO : add the game status, with a button to publish/unpublish
-  //TODO : add a preview button
-
   return (
     <>
       <EditGameBanner
