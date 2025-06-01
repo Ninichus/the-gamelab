@@ -83,7 +83,9 @@ export async function buildTabs({
       specs: {
         display: "Specs",
         icon: <></>,
-        component: <SpecsList game={{ id: game.id }} edit={edit} />,
+        component: (
+          <SpecsList game={{ id: game.id, specs: game.specs }} edit={edit} />
+        ),
       },
     };
   }

@@ -8,5 +8,5 @@ export function GameDescription({
     description: string | null;
   };
 }) {
-  return <p className="text-muted-foreground">{game.description}</p>;
+  return <p>{game.description}</p>;
 }
