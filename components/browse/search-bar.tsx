@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "../ui/label";
-import { Slider } from "../ui/slider";
+import { TooltipSlider } from "../tooltip-slider";
 
 const typeLegend: Record<string, string> = {
   board_game: "Board Game",
@@ -41,7 +41,7 @@ type Game = {
 };
 
 type Filters = {
-  type?: "board_game" | "cards_game" | "video_game";
+  type?: "board_game" | "cards_game" | "video_game" | "any";
   averageRating: [number, number];
   tags: string[];
 };
@@ -59,17 +59,28 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
     averageRating: [1, 10],
     tags: [],
   }); //Filters used to query
+
+  //TODO handle tags ?
+
   useQuery({
     //TODO : use isLoading to show a loading state
     queryKey: ["games", search, filters],
     queryFn: async () => {
       if (!search) return [];
       const games = await searchGames({
-        query: { search, filters },
+        query: {
+          search,
+          filters: {
+            ...filters,
+            type:
+              filters.type && filters.type !== "any" ? filters.type : undefined,
+          },
+        },
         limit: 25,
         offset: 0,
       });
       setGames(games);
+      return games;
     },
   });
 
@@ -97,23 +108,30 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
 
           <div className="flex flex-col gap-2">
             <Label className="text-sm font-medium">Game Type</Label>
-            <Select>
+            <Select
+              key={selectedFilters.type ?? "none"}
+              onValueChange={(type) => {
+                setSelectedFilters((prev) => ({
+                  ...prev,
+                  type: type as "board_game" | "cards_game" | "video_game",
+                }));
+              }}
+              value={
+                selectedFilters.type === "any"
+                  ? undefined
+                  : selectedFilters.type
+              }
+            >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Any" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value={"any"} className="text-muted-foreground">
+                  Any
+                </SelectItem>
                 {(["board_game", "cards_game", "video_game"] as const).map(
                   (type) => (
-                    <SelectItem
-                      key={type}
-                      value={type}
-                      onSelect={() => {
-                        setSelectedFilters((prev) => ({
-                          ...prev,
-                          type: prev.type === type ? undefined : type,
-                        }));
-                      }}
-                    >
+                    <SelectItem key={type} value={type}>
                       {typeLegend[type]}
                     </SelectItem>
                   )
@@ -123,11 +141,11 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
           </div>
           <div className="flex flex-col gap-2">
             <Label className="text-sm font-medium">Average Rating</Label>
-            <Slider
+            <TooltipSlider
               min={1}
               max={10}
               step={0.1}
-              defaultValue={[1, 10]}
+              defaultValue={selectedFilters.averageRating}
               onValueChange={(value) =>
                 setSelectedFilters((prev) => ({
                   ...prev,
@@ -155,6 +173,7 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
               onClick={() => {
                 setOpen(false);
                 setFilters(selectedFilters);
+                console.log("Filters applied:", selectedFilters);
               }}
             >
               Apply filters
