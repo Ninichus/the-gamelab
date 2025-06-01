@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 
+//TODO : lazy load images and videos
+
 type PropType = {
   slides: { id: string; index: number | null; type: string }[];
   gameId: string;
@@ -74,20 +76,21 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                 <div className="embla__slide" key={index}>
                   {slide.type === "carousel_video" ? (
                     <video
-                      className="embla__slide__video"
-                      poster={`/download/${slide.id}-thumbnail`}
+                      className="embla__slide__video w-full h-full object-cover aspect-video max-w-full max-h-full block"
+                      poster={`/download/${slide.id.slice(0, -2)}_t`}
                       width={1920}
                       height={1080}
                       controls
-                      autoPlay
+                      /*autoPlay
                       muted
-                      playsInline
+                      playsInline*/
                     >
                       <source src={`/download/${slide.id}`} />
                       Your browser does not support the video tag.
                     </video>
                   ) : (
                     <Image
+                      className="embla__slide__image w-full h-full object-cover aspect-video max-w-full max-h-full block"
                       src={`/download/${slide.id}`}
                       alt={`Carousel ${index}`}
                       width={1920}

@@ -81,6 +81,20 @@ export async function POST(
   try {
     await db.transaction(async (tx) => {
       const fileId = nanoid(40);
+
+      if (type === "carousel_file" && file.type.match("video/*")) {
+        await tx.insert(files).values({
+          id: `${fileId.slice(0, -2)}_t`,
+          name: `${file.name}-thumbnail`,
+          type: "carousel_video_thumbnail",
+          index,
+          gameId,
+          userId: user.id,
+        });
+        //TODO : extract a thumbnail
+        //TODO : delete thumbnails when game / video deleted
+      }
+
       await tx.insert(files).values({
         id: fileId,
         name: file.name,
@@ -95,7 +109,7 @@ export async function POST(
         userId: user.id,
         associatedThumbnail:
           type === "carousel_file" && file.type.match("video/*")
-            ? `${fileId}-thumbnail`
+            ? `${fileId.slice(0, -2)}_t`
             : null,
       });
 
@@ -104,19 +118,6 @@ export async function POST(
       } catch (e) {
         console.error("Error uploading file to S3", e);
         tx.rollback();
-      }
-
-      if (type === "carousel_file" && file.type.match("video/*")) {
-        await tx.insert(files).values({
-          id: `${fileId}-thumbnail`,
-          name: `${file.name}-thumbnail`,
-          type: "carousel_video_thumbnail",
-          index,
-          gameId,
-          userId: user.id,
-        });
-        //TODO : extract a thumbnail
-        //TODO : delete thumbnails when game / video deleted
       }
     });
   } catch (error) {
