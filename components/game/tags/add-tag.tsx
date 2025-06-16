@@ -34,7 +34,10 @@ export function AddTag({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Badge className="cursor-pointer" aria-expanded={open}>
+        <Badge
+          className="cursor-pointer sm:w-auto w-full sm:inline-flex"
+          aria-expanded={open}
+        >
           <Plus className="mr-2 h-4 w-4" />
           Add Tag
         </Badge>

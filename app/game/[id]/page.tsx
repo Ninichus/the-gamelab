@@ -80,7 +80,7 @@ export default async function GamePage({
       {canEdit && (
         <EditGameBanner game={{ id: game.id, status: game.status }} />
       )}
-      <div className="flex justify-between pt-4 gap-8">
+      <div className="flex justify-between pt-4 gap-6 md:gap-8 flex-col md:flex-row">
         <div className="w-full">
           <Card className="p-6">
             <CardTitle>

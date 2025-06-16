@@ -29,12 +29,15 @@ export default async function ProfilePage({
         <CardDescription className="flex p-0 m-0 gap-6">
           <span>{games.length} Games Created&nbsp;</span>
           <span>
-            {(
-              games
-                .filter((game) => game.averageRating)
-                .reduce((total, game) => total + game.averageRating!, 0) /
-              games.filter((game) => game.averageRating).length
-            ).toFixed(1)}{" "}
+            {(() => {
+              const ratedGames = games.filter((game) => game.averageRating);
+              const avg =
+                ratedGames.reduce(
+                  (total, game) => total + game.averageRating!,
+                  0
+                ) / ratedGames.length;
+              return isNaN(avg) ? "?" : avg.toFixed(1);
+            })()}{" "}
             Average Rating
           </span>
         </CardDescription>

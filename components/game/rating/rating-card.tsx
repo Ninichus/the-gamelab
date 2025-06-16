@@ -12,7 +12,7 @@ export async function RatingCard({ gameId }: { gameId: string }) {
   }
 
   return (
-    <Card className="flex flex-col max-h-90 min-w-65">
+    <Card className="flex flex-col max-h-90 min-w-65 mb-8 mt-0">
       <CardContent className="flex-1 pb-0 mb-0">
         <RatingChart averageRating={result.averageRating} />
       </CardContent>

@@ -27,7 +27,7 @@ export function EditGameBanner({
       {showEditButton && (
         <CardContent className="flex gap-2 flex-col-reverse sm:flex-row">
           <Link href={`/game/${game.id}/edit`}>
-            <Button className="cursor-pointer" size="sm">
+            <Button className="cursor-pointer sm:w-auto w-full" size="sm">
               Edit
             </Button>
           </Link>

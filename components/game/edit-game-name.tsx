@@ -7,10 +7,10 @@ import { useDebounce } from "@/hooks/use-debounce";
 export function EditGameName({ game }: { game: { id: string; name: string } }) {
   return (
     <>
-      <div>
+      <div className="max-w-full">
         <Input
           name="name"
-          className="!text-3xl font-bold tracking-tight text-foreground sm:text-4xl w-auto py-6"
+          className="!text-3xl font-bold tracking-tight text-foreground sm:text-4xl w-full py-6"
           onChange={useDebounce((e) => updateGameName(game.id, e.target.value))}
           defaultValue={game.name}
           placeholder="My awesome game"

@@ -30,7 +30,7 @@ export function DeleteGameBanner({ gameId }: { gameId: string }) {
               <Button
                 variant={"destructive"}
                 size="sm"
-                className="cursor-pointer"
+                className="cursor-pointer w-full sm:w-auto"
               >
                 Delete
               </Button>

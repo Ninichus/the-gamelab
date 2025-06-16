@@ -18,7 +18,7 @@ export async function CommentsSection({ game }: { game: { id: string } }) {
   const user = await getUser();
 
   return (
-    <Card className="p-6 my-8">
+    <Card className="p-6 mt-6 sm:my-6">
       <CardTitle className="flex text-3xl gap-2">
         <MessageSquare />
         Comments

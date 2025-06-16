@@ -53,7 +53,7 @@ type Filters = {
 
 export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
   const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(" ");
   const [selectedFilters, setSelectedFilters] = useState<Filters>({
     type: undefined,
     averageRating: [1, 10],
@@ -93,7 +93,7 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
   useEffect(() => {
     if (initialized.current) return;
     initialized.current = true;
-    setSearch(" ");
+    setSearch("");
     setFilters({
       type: undefined,
       averageRating: [1, 10],

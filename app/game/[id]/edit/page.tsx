@@ -64,7 +64,7 @@ export default async function EditGamePage({
         //isAdmin={user.isAdmin}
       />
       <Card className="p-6 mt-4">
-        <CardTitle className="flex justify-between mt-4 items-start">
+        <CardTitle className="flex flex-col sm:flex-row justify-between mt-4 items-start gap-2">
           <div className="flex flex-col gap-1">
             <EditGameName game={{ id: game.id, name: game.name }} />
             <GameType game={{ id: game.id, type: game.type }} edit={true} />

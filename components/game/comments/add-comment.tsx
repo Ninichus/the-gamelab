@@ -54,7 +54,7 @@ export function AddComment({ gameId }: { gameId: string }) {
           Your name and the rating you gave this game will appear alongside your
           comment
         </p>
-        <Button type="submit" className="cursor-pointer">
+        <Button type="submit" className="cursor-pointer sm:w-auto w-full">
           Post Comment
         </Button>
       </form>
