@@ -10,8 +10,8 @@ export async function Header() {
   const isAdmin = user?.isAdmin;
 
   const navLinks = [
-    { href: "/browse", title: "Browse" },
-    { href: "/create", title: "Add a Game" },
+    { href: "/browse", title: "Explore" },
+    { href: "/create", title: "Upload" },
   ];
 
   if (user) {
@@ -26,15 +26,16 @@ export async function Header() {
     <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full backdrop-blur">
       <div className="flex md:hidden items-center px-4 h-14 justify-between">
         <MobileNav appName={"The GameLab"} navLinks={navLinks} />
-
-        <Link href="/" className="flex mr-6 items-center">
-          <GameLabIcon className="fill-foreground size-10" />
-          <span className="font-bold">{"The Gamelab"}</span>
+        <Link href="/" className="flex mr-6 items-center gap-2">
+          <GameLabIcon className="fill-foreground size-12" />
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">The GameLab</h1>
+          </div>
         </Link>
 
         <AvatarDropdown user={user} />
       </div>
-      <div className="hidden md:flex container h-14 max-w-screen-2xl items-center">
+      <div className="hidden md:flex container h-14 items-center max-w-7xl mx-auto">
         <MainNav appName={"The GameLab"} navLinks={navLinks} />
         <div className="flex flex-1 items-center justify-end space-x-2">
           <AvatarDropdown user={user} />

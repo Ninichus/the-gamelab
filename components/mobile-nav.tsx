@@ -1,4 +1,14 @@
+import { Menu } from "lucide-react";
 import Link from "next/link";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetDescription,
+} from "@/components/ui/sheet";
+import { GameLabIcon } from "./gamelab-icon";
 
 export async function MobileNav({
   navLinks,
@@ -7,16 +17,33 @@ export async function MobileNav({
   navLinks: Array<{ href: string; title: string }>;
 }) {
   return (
-    <nav className="hidden md:flex items-center space-x-4">
-      {navLinks.map((link) => (
-        <Link
-          key={link.href}
-          href={link.href}
-          className="text-sm font-medium text-muted-foreground hover:text-foreground"
-        >
-          {link.title}
-        </Link>
-      ))}
-    </nav>
+    <Sheet>
+      <SheetTrigger>
+        <Menu />
+      </SheetTrigger>
+      <SheetContent side="left">
+        <SheetHeader>
+          <SheetTitle>
+            <Link href="/" className="flex mr-6 items-center gap-2">
+              <GameLabIcon className="fill-foreground size-12" />
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">The GameLab</h1>
+              </div>
+            </Link>
+          </SheetTitle>
+          <SheetDescription className="flex flex-col space-y-4 ml-5 mt-5">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-lg font-medium text-muted-foreground hover:text-foreground"
+              >
+                {link.title}
+              </Link>
+            ))}
+          </SheetDescription>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
   );
 }
