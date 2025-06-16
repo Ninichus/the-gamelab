@@ -14,7 +14,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addTag } from "@/lib/actions/tags/add-tag";
 
 //TODO handle errors
@@ -30,6 +30,19 @@ export function AddTag({
 }) {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [showAddTag, setShowAddTag] = useState(false);
+
+  useEffect(() => {
+    if (searchValue) {
+      setShowAddTag(
+        !tags.some(
+          (tag) => tag.name.toLowerCase() === searchValue.toLowerCase()
+        )
+      );
+    } else {
+      setShowAddTag(false);
+    }
+  }, [searchValue, tags]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -50,22 +63,23 @@ export function AddTag({
             onValueChange={(value: string) => setSearchValue(value)}
           />
           <CommandList>
-            {searchValue ? (
-              <CommandEmpty
-                onClick={async () => {
-                  await addTag({ gameId, tagName: searchValue });
-                  setOpen(false);
-                }}
-                className="flex items-center justify-center gap-1 italic hover:bg-accent hover:text-accent-foreground"
-              >
-                {`Create the tag : ${searchValue}`}
-              </CommandEmpty>
-            ) : (
+            {!searchValue && (
               <CommandEmpty className="flex items-center italic justify-center gap-1">
                 Please type a tag name...
               </CommandEmpty>
             )}
-
+            {showAddTag && (
+              <CommandItem
+                value={searchValue}
+                onSelect={async () => {
+                  await addTag({ gameId, tagName: searchValue });
+                  setOpen(false);
+                }}
+                className="flex items-center justify-center gap-1 italic hover:bg-accent hover:text-accent-foreground cursor-pointer"
+              >
+                {`Create the tag : ${searchValue}`}
+              </CommandItem>
+            )}
             <CommandGroup>
               {tags
                 .filter((tag) => !currentTags.includes(tag))
@@ -77,6 +91,7 @@ export function AddTag({
                       await addTag({ gameId, tagName: currentValue });
                       setOpen(false);
                     }}
+                    className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
                   >
                     {tag.name}
                   </CommandItem>
