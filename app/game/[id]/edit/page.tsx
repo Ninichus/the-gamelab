@@ -15,6 +15,7 @@ import { EditGameBanner } from "@/components/game/edit-game-banner";
 import { ManageGameButtons } from "@/components/game/manage-game-buttons";
 import { DeleteGameBanner } from "@/components/game/delete-game";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { UpdateBrowseImage } from "@/components/update-browse-image";
 
 //TODO better error handling + use canWrite and redirect accordingly
 //TODO : button to delete image + add preview image + move images
@@ -67,7 +68,10 @@ export default async function EditGamePage({
         <CardTitle className="flex flex-col sm:flex-row justify-between mt-4 items-start gap-2">
           <div className="flex flex-col gap-1">
             <EditGameName game={{ id: game.id, name: game.name }} />
-            <GameType game={{ id: game.id, type: game.type }} edit={true} />
+            <div className="flex flex-col sm:flex-row gap-2 justify-between items-start">
+              <GameType game={{ id: game.id, type: game.type }} edit={true} />
+              <UpdateBrowseImage gameId={game.id} />
+            </div>
           </div>
           <div>
             <ManageGameButtons game={{ status: game.status, id: gameId }} />

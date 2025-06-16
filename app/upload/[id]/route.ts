@@ -1,11 +1,12 @@
 import { getUser } from "@/lib/session";
 import { canWrite } from "@/lib/permissions";
-import { uploadFile } from "@/lib/client-s3";
+import { deleteFile, uploadFile } from "@/lib/client-s3";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { files } from "@/db/schema";
 import { customAlphabet } from "nanoid";
 import { NextRequest } from "next/server";
+import { eq, and } from "drizzle-orm";
 
 export const dynamic = "force-dynamic";
 
@@ -76,6 +77,32 @@ export async function POST(
       { success: false, error: "Invalid file type" },
       { status: 400 }
     );
+  }
+
+  if (type === "browse_image") {
+    await db.transaction(async (tx) => {
+      // Check if a browse image already exists
+      const [existingBrowseImage] = await tx
+        .select()
+        .from(files)
+        .where(and(eq(files.gameId, gameId), eq(files.type, "browse_image")))
+        .limit(1);
+
+      if (existingBrowseImage) {
+        // Delete the existing browse image
+        try {
+          await deleteFile(existingBrowseImage.id); // This will delete the file from S3
+          await tx.delete(files).where(eq(files.id, existingBrowseImage.id));
+        } catch (e) {
+          console.error("Error deleting existing browse image", e);
+          tx.rollback();
+          return Response.json(
+            { success: false, error: "Error deleting existing browse image" },
+            { status: 500 }
+          );
+        }
+      }
+    });
   }
 
   try {

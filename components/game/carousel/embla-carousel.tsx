@@ -22,6 +22,7 @@ import { moveSlide } from "@/lib/actions/carousel/move-slide";
 import { deleteSlide } from "@/lib/actions/carousel/delete-slide";
 
 //TODO : lazy load images and videos
+//TODO : fullscreen image on click
 
 type PropType = {
   slides: { id: string; index: number | null; type: string }[];
@@ -247,13 +248,30 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                         xhr.send(formData);
                       }}
                     >
+                      {file && (
+                        <div className="mb-4 flex justify-center">
+                          <Image
+                            src={URL.createObjectURL(file)}
+                            alt="Selected preview"
+                            className="max-h-48 rounded shadow aspect-video object-cover"
+                            width={1920}
+                            height={1080}
+                            loading="lazy"
+                            onLoad={(e) =>
+                              URL.revokeObjectURL(
+                                (e.target as HTMLImageElement).src
+                              )
+                            }
+                          />
+                        </div>
+                      )}
                       <Input
                         type="file"
                         accept="image/*,video/*"
                         onChange={(e) => setFile(e.target.files?.[0] || null)}
                         className="cursor-pointer"
                       />
-                      <div>
+                      <div className="flex flex-col sm:flex-row gap-2 mt-2">
                         <Button
                           type="submit"
                           disabled={!file || isUploading}
