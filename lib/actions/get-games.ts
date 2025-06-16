@@ -6,45 +6,81 @@ import {
   games as gamesTable,
   users,
   tags as tagsTable,
+  files as filesTable,
 } from "@/db/schema";
 import { canRead } from "@/lib/permissions";
 
+type GameWithTags = {
+  id: string;
+  name: string;
+  type: "board_game" | "cards_game" | "video_game";
+  status: string;
+  tags?: {
+    id: number;
+    name: string;
+  }[];
+  averageRating: number | null;
+  imagePreview?: string;
+  role?: string;
+};
+
 export async function getGames(username: string) {
-  const games = await db
+  const result = await db
     .select({
-      id: gamesTable.id,
-      name: gamesTable.name,
-      type: gamesTable.type,
-      status: gamesTable.status,
+      games: {
+        id: gamesTable.id,
+        name: gamesTable.name,
+        type: gamesTable.type,
+        status: gamesTable.status,
+        averageRating: gamesTable.averageRating,
+      },
+      tags: {
+        id: tagsTable.id,
+        name: tagsTable.name,
+      },
+      role: authors.role,
+      imagePreview: filesTable.id,
     })
     .from(gamesTable)
-    .leftJoin(authors, eq(authors.gameId, gamesTable.id))
+    .innerJoin(authors, eq(authors.gameId, gamesTable.id))
     .innerJoin(users, eq(users.id, authors.userId))
+    .leftJoin(tagsTable, eq(tagsTable.gameId, gamesTable.id))
+    .leftJoin(
+      filesTable,
+      and(
+        eq(filesTable.gameId, gamesTable.id),
+        eq(filesTable.type, "browse_image")
+      )
+    )
     .where(eq(users.username, username));
 
-  const results = await Promise.all(
+  const gamesMap = new Map<string, GameWithTags>();
+
+  result.map((row) => {
+    const game = row.games;
+    const tag = row.tags;
+    const imagePreview = row.imagePreview ? row.imagePreview : undefined;
+    const role = row.role ? row.role : undefined;
+
+    if (!gamesMap.has(game.id)) {
+      gamesMap.set(game.id, { ...game, tags: [], imagePreview, role });
+    }
+
+    if (tag && tag.id !== undefined) {
+      gamesMap.get(game.id)!.tags!.push(tag);
+    }
+  });
+
+  // Filter games by permissions
+  const games = Array.from(gamesMap.values());
+  const permissions = await Promise.all(
     games.map(async (game) => ({
-      game,
+      id: game.id,
       canRead: await canRead(game.id),
-      role: (
-        await db
-          .select({ role: authors.role })
-          .from(authors)
-          .innerJoin(users, eq(users.id, authors.userId))
-          .where(and(eq(authors.gameId, game.id), eq(users.username, username)))
-      )[0].role,
-      tags: await db
-        .select({ id: tagsTable.id, name: tagsTable.name })
-        .from(tagsTable)
-        .where(eq(tagsTable.gameId, game.id)),
     }))
   );
 
-  const filteredGames = results
-    .filter((result) => result.canRead)
-    .map((result) => {
-      return { game: result.game, role: result.role, tags: result.tags };
-    });
-
-  return { games: filteredGames };
+  return games.filter(
+    (game) => permissions.find((p) => p.id === game.id)?.canRead
+  );
 }
