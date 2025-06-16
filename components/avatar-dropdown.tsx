@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { LogOut, User2 } from "lucide-react";
 
 export function AvatarDropdown({ user }: { user: User | null }) {
   return user ? <UserDropdown user={user} /> : <GuestDropdown />;
@@ -23,20 +24,24 @@ function UserDropdown({ user }: { user: User }) {
           <Avatar user={user} />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0">
-        <ul className="flex flex-col gap-1 p-4">
-          <Link href={`/profile/${user.username}`}>
-            <li className="text-sm font-medium text-muted-foreground hover:bg-secondary/90 rounded-md p-2">
-              See my profile
-            </li>
-          </Link>
-
-          <Link href={`/auth/logout`}>
-            <li className="text-sm font-medium text-muted-foreground hover:bg-secondary/90 rounded-md p-2">
-              Logout
-            </li>
-          </Link>
-        </ul>
+      <PopoverContent className="w-42">
+        <div>
+          <Button asChild variant="link" className="w-full">
+            <Link href={`/profile/${user.username}`}>
+              <User2 />
+              View Profile
+            </Link>
+          </Button>
+        </div>
+        <hr className="my-2 border-t border-gray-200" />
+        <div>
+          <Button asChild variant="link" className="w-full">
+            <Link href="/auth/logout" prefetch={false} className="text-red-600">
+              <LogOut />
+              Log Out
+            </Link>
+          </Button>
+        </div>
       </PopoverContent>
     </Popover>
   );
