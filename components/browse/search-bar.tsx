@@ -1,7 +1,7 @@
 "use client";
 
 import { Funnel, Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { searchGames } from "@/lib/actions/search-games";
 import { Button } from "@/components/ui/button";
@@ -88,6 +88,16 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
       return games;
     },
   });
+
+  useEffect(() => {
+    if (search) return;
+    setSearch(" ");
+    setFilters({
+      type: undefined,
+      averageRating: [1, 10],
+      tags: [],
+    });
+  }, []);
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
