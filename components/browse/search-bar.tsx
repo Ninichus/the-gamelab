@@ -1,7 +1,7 @@
 "use client";
 
 import { Funnel, Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { searchGames } from "@/lib/actions/search-games";
 import { Button } from "@/components/ui/button";
@@ -89,8 +89,10 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
     },
   });
 
+  const initialized = useRef(false);
   useEffect(() => {
-    if (search) return;
+    if (initialized.current) return;
+    initialized.current = true;
     setSearch(" ");
     setFilters({
       type: undefined,

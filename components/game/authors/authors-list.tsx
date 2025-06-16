@@ -1,5 +1,4 @@
 "use server";
-import { cn } from "@/lib/utils";
 import { getAuthors } from "@/lib/actions/authors/get-authors";
 import { AddAuthor } from "@/components/game/authors/add-author";
 import { RemoveAuthor } from "@/components/game/authors/remove-author";
@@ -28,7 +27,7 @@ export async function AuthorsList({
     <>
       <ul>
         {edit
-          ? authors.map((author, index) => (
+          ? authors.map((author) => (
               <li
                 className="p-4 flex justify-between items-center hover:bg-gradient-to-r from-purple-600/10 via-blue-600/10 to-orange-500/10 rounded-md"
                 key={author.id}

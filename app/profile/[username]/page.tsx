@@ -7,12 +7,6 @@ import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 
 //TODO Loading wheel
 
-const legend = {
-  board_game: "Board Game",
-  cards_game: "Card Game",
-  video_game: "Video Game",
-};
-
 export default async function ProfilePage({
   params,
 }: {

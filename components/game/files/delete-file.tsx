@@ -1,5 +1,5 @@
 "use client";
-import { Delete, Trash, X } from "lucide-react";
+import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { deleteFile } from "@/lib/actions/files/delete-file";
 

@@ -53,10 +53,10 @@ export default function Home() {
             </div>
             <div>
               <p className="mb-4">
-                Whether you've designed a strategic board game exploring British
-                literature or coded an interactive journey through English
-                history, the GameLab is where your creations come to life and
-                reach fellow learners worldwide.
+                Whether you&apos;ve designed a strategic board game exploring
+                British literature or coded an interactive journey through
+                English history, the GameLab is where your creations come to
+                life and reach fellow learners worldwide.
               </p>
               <p>
                 Join our community of student developers, discover innovative
