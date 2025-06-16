@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "The GameLab",
-  description: "A game development workshop",
+  description: "Where English Learning Meets Game Creation",
 };
 
 export default function RootLayout({
@@ -33,9 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <Header />
-        <main className="sm:container px-4 py-4 lg:py-8 flex-1">
-          {children}
-        </main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
