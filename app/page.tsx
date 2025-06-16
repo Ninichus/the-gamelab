@@ -86,7 +86,7 @@ export default function Home() {
             <Link href="/browse">
               <Button
                 size="lg"
-                className="bg-white text-purple-600 hover:bg-gray-100 font-semibold px-8 py-4 text-lg shadow-lg cursor-pointer"
+                className="bg-white text-purple-600 hover:bg-gray-300 font-semibold px-8 py-4 text-lg shadow-lg cursor-pointer"
               >
                 <Gamepad2 className="h-6 w-6 mr-3" />
                 Explore Games

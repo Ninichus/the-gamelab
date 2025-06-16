@@ -13,6 +13,7 @@ import { buildTabs } from "@/lib/actions/build-tabs";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { EditGameBanner } from "@/components/game/edit-game-banner";
 import { RatingCard } from "@/components/game/rating/rating-card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 //TODO use canRead and redirect accordingly
 
@@ -75,39 +76,51 @@ export default async function GamePage({
   const tabs = await buildTabs({ game, edit: false });
 
   return (
-    <>
+    <div className="max-w-7xl mx-auto">
       {canEdit && (
         <EditGameBanner game={{ id: game.id, status: game.status }} />
       )}
-      <div className="flex justify-between pt-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            {game.name}
-          </h1>
-          <GameType game={{ id: game.id, type: game.type }} />
-          <TagsList game={{ id: game.id }} />
+      <div className="flex justify-between pt-4 gap-8">
+        <div className="w-full">
+          <Card className="p-6">
+            <CardTitle>
+              <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                {game.name}
+              </h1>
+              <GameType game={{ id: game.id, type: game.type }} />
+            </CardTitle>
+            <CardContent className="flex flex-col gap-4">
+              <GameCarousel game={{ id: game.id }} />
+              <TagsList game={{ id: game.id }} />
+              <Tabs defaultValue="description" className="w-full">
+                <TabsList>
+                  {Object.entries(tabs).map(([key, { display, icon }]) => (
+                    <TabsTrigger
+                      key={key}
+                      value={key}
+                      className="cursor-pointer"
+                    >
+                      {icon}
+                      {display}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+                {Object.entries(tabs).map(([key, { component }]) => (
+                  <TabsContent
+                    key={key}
+                    value={key}
+                    className="bg-muted p-4 rounded-lg"
+                  >
+                    {component}
+                  </TabsContent>
+                ))}
+              </Tabs>
+            </CardContent>
+          </Card>
+          <CommentsSection game={{ id: gameId }} />
         </div>
         <RatingCard gameId={game.id} />
       </div>
-
-      <GameCarousel game={{ id: game.id }} />
-      <Tabs defaultValue="description" className="w-full">
-        <TabsList>
-          {Object.entries(tabs).map(([key, { display, icon }]) => (
-            <TabsTrigger key={key} value={key} className="gap-1 cursor-pointer">
-              {icon}
-              {display}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        {Object.entries(tabs).map(([key, { component }]) => (
-          <TabsContent key={key} value={key}>
-            {component}
-          </TabsContent>
-        ))}
-      </Tabs>
-
-      <CommentsSection game={{ id: gameId }} />
-    </>
+    </div>
   );
 }

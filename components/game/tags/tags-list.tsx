@@ -22,7 +22,11 @@ export async function TagsList({
   return (
     <div className="w-full flex flex-wrap items-center gap-1 mt-1">
       {tags.map((tag) => (
-        <Badge key={tag.id}>
+        <Badge
+          key={tag.id}
+          className="text-xs border-purple-200 text-purple-600"
+          variant="outline"
+        >
           {tag.name}
           {edit && <RemoveTag gameId={game.id} tagId={tag.id} />}
         </Badge>

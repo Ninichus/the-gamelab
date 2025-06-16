@@ -30,12 +30,7 @@ export async function AuthorsList({
         {edit
           ? authors.map((author, index) => (
               <li
-                className={cn(
-                  "p-4 flex justify-between items-center hover:bg-secondary/90 rounded-md",
-                  {
-                    "border-b": index !== authors.length - 1,
-                  }
-                )}
+                className="p-4 flex justify-between items-center hover:bg-gradient-to-r from-purple-600/10 via-blue-600/10 to-orange-500/10 rounded-md"
                 key={author.id}
               >
                 <h3 className="text-lg font-semibold">
@@ -52,14 +47,7 @@ export async function AuthorsList({
             ))
           : authors.map((author, index) => (
               <Link key={author.id} href={`/profile/${author.username}`}>
-                <li
-                  className={cn(
-                    "p-4 flex justify-between items-center hover:bg-secondary/90 rounded-md",
-                    {
-                      "border-b": index !== authors.length - 1,
-                    }
-                  )}
-                >
+                <li className="p-4 flex justify-between items-center hover:bg-gradient-to-r from-purple-600/10 via-blue-600/10 to-orange-500/10 rounded-md">
                   <h3 className="text-lg font-semibold">
                     {`${author.first_name} ${author.last_name}`}
                     {author.role ? ` - ${author.role}` : undefined}

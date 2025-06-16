@@ -46,6 +46,11 @@ export function GameType({
       </Select>
     </>
   ) : (
-    <Badge>{legend[game.type]}</Badge>
+    <Badge
+      className="text-xs bg-purple-100 text-purple-700"
+      variant="secondary"
+    >
+      {legend[game.type]}
+    </Badge>
   );
 }

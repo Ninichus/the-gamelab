@@ -20,7 +20,7 @@ export function EditGameBanner({
   showEditButton?: boolean;
 }) {
   return (
-    <Card className="border-primary">
+    <Card className="border-primary mt-6">
       <CardHeader>
         <CardTitle>This game is {legend[game.status]}</CardTitle>
       </CardHeader>

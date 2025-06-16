@@ -50,12 +50,12 @@ export function AddComment({ gameId }: { gameId: string }) {
             </FormItem>
           )}
         />
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-gray-500 py-2">
           Your name and the rating you gave this game will appear alongside your
           comment
         </p>
         <Button type="submit" className="cursor-pointer">
-          Submit
+          Post Comment
         </Button>
       </form>
     </Form>

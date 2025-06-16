@@ -16,6 +16,7 @@ import { ManageGameButtons } from "@/components/game/manage-game-buttons";
 import { DeleteGameBanner } from "@/components/game/delete-game";
 
 //TODO better error handling + use canWrite and redirect accordingly
+//TODO : button to delete image + add preview image + move images
 
 export default async function EditGamePage({
   params,

@@ -1,6 +1,6 @@
 "use server";
 import { getFiles } from "@/lib/actions/files/get-files";
-import { File } from "lucide-react";
+import { Download, File } from "lucide-react";
 import { Error } from "@/components/error";
 import { DeleteFile } from "./delete-file";
 import { AddFile } from "./add-file";
@@ -21,26 +21,23 @@ export async function FilesList({
     <>
       <ul className="flex flex-col gap-2">
         {result.files.map((file) => (
-          <li
-            key={file.id}
-            className="flex items-center justify-between gap-4 p-2 border-b border-b-slate-200 dark:border-b-slate-700"
-          >
-            <div className="flex items-center gap-4">
-              <File />
-              <span className="text-sm font-medium text-slate-900 dark:text-slate-50">
-                {file.name}
-              </span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
-                {file.downloadCount} download{file.downloadCount > 1 ? "s" : ""}
-              </span>
-              <a href={`/download/${file.id}`} download>
-                <span className="text-xs text-blue-500 dark:text-blue-400">
-                  Download
-                </span>
-              </a>
-              {edit && <DeleteFile fileId={file.id} gameId={game.id} />}
-            </div>
-          </li>
+          <a href={`/download/${file.id}`} download key={file.id}>
+            <li className="p-4 flex justify-between items-center hover:bg-gradient-to-r from-purple-600/10 via-blue-600/10 to-orange-500/10 rounded-md">
+              <div className="flex gap-2 items-center">
+                <File />
+                <h3 className="text-lg font-semibold">{file.name}</h3>
+              </div>
+              <div className="flex gap-4 items-center text-sm">
+                <span>{`Downloaded ${file.downloadCount} time${
+                  file.downloadCount > 1 ? "s" : ""
+                }`}</span>
+                <Download
+                  className="h-4 w-4 text-muted-foreground"
+                  aria-hidden="true"
+                />
+              </div>
+            </li>
+          </a>
         ))}
       </ul>
       {result.files.length === 0 && (

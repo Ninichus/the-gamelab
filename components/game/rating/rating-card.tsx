@@ -12,12 +12,12 @@ export async function RatingCard({ gameId }: { gameId: string }) {
   }
 
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col max-h-90 min-w-65">
       <CardContent className="flex-1 pb-0 mb-0">
         <RatingChart averageRating={result.averageRating} />
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
+        <div className="font-medium">
           {result.numberOfRatings > 0
             ? `Based on ${result.numberOfRatings} rating${
                 result.numberOfRatings > 1 ? "s" : ""
