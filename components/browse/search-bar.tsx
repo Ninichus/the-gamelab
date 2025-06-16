@@ -1,6 +1,6 @@
 "use client";
 
-import { Funnel } from "lucide-react";
+import { Funnel, Search } from "lucide-react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { searchGames } from "@/lib/actions/search-games";
@@ -37,7 +37,12 @@ type Game = {
   name: string;
   type: "board_game" | "cards_game" | "video_game";
   status: string;
-  tags?: string[];
+  tags?: {
+    id: number;
+    name: string;
+  }[];
+  averageRating: number | null;
+  imagePreview?: string;
 };
 
 type Filters = {
@@ -85,12 +90,19 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
   });
 
   return (
-    <div>
-      <Input
-        placeholder="Search a game"
-        onChange={(e) => setSearch(e.target.value)}
-        value={search}
-      />
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="relative w-full">
+        <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <Search className="h-5 w-5 text-gray-400" />
+        </span>
+        <Input
+          placeholder="Search games..."
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
+          className="pl-10 bg-white text-gray-900 border"
+        />
+      </div>
+
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button className="cursor-pointer">

@@ -9,19 +9,32 @@ type Game = {
   name: string;
   type: "board_game" | "cards_game" | "video_game";
   status: string;
-  tags?: string[];
+  tags?: {
+    id: number;
+    name: string;
+  }[];
+  averageRating: number | null;
+  imagePreview?: string;
 };
 
 export default function BrowsePage() {
   const [games, setGames] = useState<Game[]>([]);
   return (
     <QueryProvider>
-      <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-        <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+      <div className="bg-gradient-to-r from-purple-600 via-blue-600 to-orange-500 text-white py-16">
+        <div className="text-center mb-8">
+          <h2 className="text-4xl font-bold">Browse Games</h2>
+          <p className="text-xl opacity-90 max-w-2xl mx-auto">
+            Discover amazing games created by students during their English
+            courses
+          </p>
+        </div>
+
+        <div className="max-w-md mx-auto">
           <SearchBar setGames={setGames} />
-          <GamesList games={games} />
-        </main>
+        </div>
       </div>
+      <GamesList games={games} />
     </QueryProvider>
   );
 }
