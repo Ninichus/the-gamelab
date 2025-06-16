@@ -27,7 +27,9 @@ export default async function ProfilePage({
       <Card className="max-w-7xl mx-auto my-6 p-4">
         <CardTitle className="font-bold text-3xl">{`${author.first_name} ${author.last_name}`}</CardTitle>
         <CardDescription className="flex p-0 m-0 gap-6">
-          <span>{games.length} Games Created&nbsp;</span>
+          <span>{`${games.length} Game${
+            games.length > 1 ? "s" : ""
+          } Created`}</span>
           <span>
             {(() => {
               const ratedGames = games.filter((game) => game.averageRating);
