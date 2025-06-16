@@ -14,6 +14,7 @@ import { GameCarousel } from "@/components/game/carousel/game-carousel";
 import { EditGameBanner } from "@/components/game/edit-game-banner";
 import { ManageGameButtons } from "@/components/game/manage-game-buttons";
 import { DeleteGameBanner } from "@/components/game/delete-game";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 
 //TODO better error handling + use canWrite and redirect accordingly
 //TODO : button to delete image + add preview image + move images
@@ -56,39 +57,47 @@ export default async function EditGamePage({
   const tabs = await buildTabs({ game, edit: true });
 
   return (
-    <>
+    <div className="max-w-7xl mx-auto pb-4">
       <EditGameBanner
         game={{ id: game.id, status: game.status }}
         showEditButton={false}
         //isAdmin={user.isAdmin}
       />
-      <div className="flex items-center justify-between mt-4 mb-2">
-        <EditGameName game={{ id: game.id, name: game.name }} />
-        <div>
-          <ManageGameButtons game={{ status: game.status, id: gameId }} />
-        </div>
-      </div>
-      <div className="my-2 flex flex-col gap-2">
-        <GameType game={{ id: game.id, type: game.type }} edit={true} />
-        <TagsList game={{ id: game.id }} edit={true} />
-      </div>
-      <GameCarousel game={{ id: game.id }} edit={true} />
-      <Tabs defaultValue="description" className="w-full">
-        <TabsList>
-          {Object.entries(tabs).map(([key, { display, icon }]) => (
-            <TabsTrigger key={key} value={key} className="gap-1">
-              {icon}
-              {display}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        {Object.entries(tabs).map(([key, { component }]) => (
-          <TabsContent key={key} value={key}>
-            {component}
-          </TabsContent>
-        ))}
-      </Tabs>
+      <Card className="p-6 mt-4">
+        <CardTitle className="flex justify-between mt-4 items-start">
+          <div className="flex flex-col gap-1">
+            <EditGameName game={{ id: game.id, name: game.name }} />
+            <GameType game={{ id: game.id, type: game.type }} edit={true} />
+          </div>
+          <div>
+            <ManageGameButtons game={{ status: game.status, id: gameId }} />
+          </div>
+        </CardTitle>
+        <CardContent className="flex flex-col gap-4">
+          <GameCarousel game={{ id: game.id }} edit={true} />
+          <TagsList game={{ id: game.id }} edit={true} />
+          <Tabs defaultValue="description" className="w-full">
+            <TabsList>
+              {Object.entries(tabs).map(([key, { display, icon }]) => (
+                <TabsTrigger key={key} value={key} className="gap-1">
+                  {icon}
+                  {display}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            {Object.entries(tabs).map(([key, { component }]) => (
+              <TabsContent
+                key={key}
+                value={key}
+                className="bg-muted p-4 rounded-lg"
+              >
+                {component}
+              </TabsContent>
+            ))}
+          </Tabs>
+        </CardContent>
+      </Card>
       <DeleteGameBanner gameId={gameId} />
-    </>
+    </div>
   );
 }

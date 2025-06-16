@@ -1,5 +1,5 @@
 "use client";
-import { X } from "lucide-react";
+import { Delete, Trash, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { deleteFile } from "@/lib/actions/files/delete-file";
 
@@ -23,7 +23,7 @@ export function DeleteFile({
         //TODO Handle error
       }}
     >
-      <X className="size-3 group-hover:text-destructive" />
+      <Trash className="size-3 group-hover:text-destructive" />
     </Button>
   );
 }

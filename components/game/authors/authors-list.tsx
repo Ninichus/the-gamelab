@@ -26,7 +26,7 @@ export async function AuthorsList({
 
   return (
     <>
-      <ul className="border rounded-md mb-2">
+      <ul>
         {edit
           ? authors.map((author, index) => (
               <li
@@ -45,7 +45,7 @@ export async function AuthorsList({
                 </div>
               </li>
             ))
-          : authors.map((author, index) => (
+          : authors.map((author) => (
               <Link key={author.id} href={`/profile/${author.username}`}>
                 <li className="p-4 flex justify-between items-center hover:bg-gradient-to-r from-purple-600/10 via-blue-600/10 to-orange-500/10 rounded-md">
                   <h3 className="text-lg font-semibold">
@@ -62,10 +62,12 @@ export async function AuthorsList({
       </ul>
       {edit && (
         <QueryProvider>
-          <AddAuthor
-            gameId={game.id}
-            authorIds={authors.map((author) => author.id)}
-          />
+          <div className="mt-2">
+            <AddAuthor
+              gameId={game.id}
+              authorIds={authors.map((author) => author.id)}
+            />
+          </div>
         </QueryProvider>
       )}
     </>

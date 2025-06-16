@@ -16,12 +16,10 @@ import { useState } from "react";
 export function DeleteGameBanner({ gameId }: { gameId: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <Card className="mt-4 border-destructive">
-      <CardHeader>
-        <CardTitle>Delete this game</CardTitle>
-      </CardHeader>
+    <Card className="mt-4 border-destructive p-4">
+      <CardTitle className="text-2xl p-0 m-0">Delete this game</CardTitle>
 
-      <CardContent className="flex gap-2 flex-col-reverse sm:flex-row">
+      <CardContent className="flex gap-2 flex-col-reverse sm:flex-row p-0 m-0">
         <div>
           <p className="text-sm text-red-500">
             This action is irreversible. All data related to this game will be
