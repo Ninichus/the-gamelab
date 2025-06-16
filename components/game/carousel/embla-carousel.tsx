@@ -17,6 +17,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
+import { CircleX, Redo, Trash, Undo } from "lucide-react";
+import { moveSlide } from "@/lib/actions/carousel/move-slide";
+import { deleteSlide } from "@/lib/actions/carousel/delete-slide";
 
 //TODO : lazy load images and videos
 
@@ -76,33 +79,100 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                 <div className="embla__slide" key={index}>
                   {slide.type === "carousel_video" ? (
                     <video
-                      className="embla__slide__video w-full h-full object-cover aspect-video max-w-full max-h-full block"
+                      className="embla__slide__video w-full h-full object-cover aspect-video max-w-full max-h-full block bg-muted rounded-2xl"
                       poster={`/download/${slide.id.slice(0, -2)}_t`}
                       width={1920}
                       height={1080}
                       controls
-                      /*autoPlay
-                      muted
-                      playsInline*/
                     >
                       <source src={`/download/${slide.id}`} />
                       Your browser does not support the video tag.
                     </video>
                   ) : (
                     <Image
-                      className="embla__slide__image w-full h-full object-cover aspect-video max-w-full max-h-full block"
+                      className="embla__slide__image w-full h-full object-cover aspect-video max-w-full max-h-full block bg-muted rounded-2xl"
                       src={`/download/${slide.id}`}
                       alt={`Carousel ${index}`}
                       width={1920}
                       height={1080}
                     />
                   )}
+                  {edit && index === selectedIndex && (
+                    <div className="absolute top-4 right-4 flex gap-2 z-10">
+                      <Button
+                        size="icon"
+                        disabled={index === 0}
+                        title="Move Left"
+                        className="cursor-pointer hover:bg-muted/10"
+                        onClick={async () => {
+                          await moveSlide({
+                            gameId,
+                            slideIndex: index,
+                            delta: -1,
+                          });
+                          //TODO : handle error
+                        }}
+                      >
+                        <Undo className="w-5 h-5" />
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="icon"
+                        title="Delete"
+                        className="cursor-pointer hover:bg-red-800"
+                        onClick={async () => {
+                          await deleteSlide({
+                            gameId,
+                            slideIndex: index,
+                          });
+                          //TODO : handle error
+                        }}
+                      >
+                        <Trash className="w-5 h-5" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        disabled={
+                          index ===
+                          slides.filter((s) =>
+                            ["carousel_image", "carousel_video"].includes(
+                              s.type
+                            )
+                          ).length -
+                            1
+                        }
+                        title="Move Right"
+                        className="cursor-pointer hover:bg-muted/10"
+                        onClick={async () => {
+                          await moveSlide({
+                            gameId,
+                            slideIndex: index,
+                            delta: 1,
+                          });
+                          //TODO : handle error
+                        }}
+                      >
+                        <Redo className="w-5 h-5" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
               ))
+          ) : edit ? (
+            <div className="embla__slide" key={0}>
+              <div className="flex items-center justify-center embla__slide__image w-full h-full object-cover aspect-video max-w-full max-h-full bg-gradient-to-br from-purple-100 via-blue-100 to-orange-100 rounded-2xl">
+                <CircleX className="size-20 text-muted" />
+                <div className="text-center mt-4">
+                  <p>No images or videos uploaded yet.</p>
+                  <p>Click on the plus icon below to add one.</p>
+                  <p>The optimal resolution is 1920x1080.</p>
+                </div>
+              </div>
+            </div>
           ) : (
             <div className="embla__slide" key={0}>
-              <div className="embla__slide__number">
-                Click on the + below to add a media
+              <div className="flex items-center justify-center embla__slide__image w-full h-full object-cover aspect-video max-w-full max-h-full bg-gradient-to-br from-purple-100 via-blue-100 to-orange-100 rounded-2xl">
+                <CircleX className="size-20 text-muted" />
               </div>
             </div>
           )}
@@ -111,7 +181,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
       <div className="embla-thumbs">
         <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
-          <div className="embla-thumbs__container">
+          <div className="embla-thumbs__container gap-1">
             {slides
               .filter((slide) =>
                 ["carousel_image", "carousel_video_thumbnail"].includes(

@@ -19,7 +19,7 @@ export async function GameCarousel({
   }
 
   return (
-    <div className="w-full bg-muted py-2 rounded-2xl">
+    <div className="w-full">
       <EmblaCarousel
         options={options}
         slides={slides.slides}
