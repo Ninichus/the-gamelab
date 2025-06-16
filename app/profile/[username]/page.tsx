@@ -1,9 +1,11 @@
 "use server";
 import { getGames } from "@/lib/actions/get-games";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
 import { getUserByUsername } from "@/lib/actions/get-user";
 import { Error } from "@/components/error";
+import { GamesList } from "@/components/browse/games-list";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+
+//TODO Loading wheel
 
 const legend = {
   board_game: "Board Game",
@@ -17,7 +19,7 @@ export default async function ProfilePage({
   params: Promise<{ username: string }>;
 }) {
   const username = (await params).username;
-  const [author, { games }] = await Promise.all([
+  const [author, games] = await Promise.all([
     getUserByUsername(username),
     getGames(username),
   ]);
@@ -28,30 +30,23 @@ export default async function ProfilePage({
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">
-        {author.first_name + " " + author.last_name}
-      </h1>
-      <ul>
-        {games.map(({ game, role, tags }) => (
-          <li key={game.id}>
-            <Link
-              href={`/game/${game.id}`}
-              className="flex items-center gap-4 hover:bg-gray-100 p-2 rounded-md"
-            >
-              <span className="text-sm font-medium">{game.name}</span>
-              <Badge className="text-xs">{legend[game.type]}</Badge>
-              <Badge className="text-xs">{game.status}</Badge>
-              {tags &&
-                tags.map((tag) => (
-                  <Badge key={tag.id} className="text-xs">
-                    {tag.name}
-                  </Badge>
-                ))}
-              {role && <Badge className="text-xs">{role}</Badge>}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <Card className="max-w-7xl mx-auto my-6 p-4">
+        <CardTitle className="font-bold text-3xl">{`${author.first_name} ${author.last_name}`}</CardTitle>
+        <CardDescription className="flex p-0 m-0 gap-6">
+          <span>{games.length} Games Created&nbsp;</span>
+          <span>
+            {(
+              games
+                .filter((game) => game.averageRating)
+                .reduce((total, game) => total + game.averageRating!, 0) /
+              games.filter((game) => game.averageRating).length
+            ).toFixed(1)}{" "}
+            Average Rating
+          </span>
+        </CardDescription>
+      </Card>
+
+      <GamesList games={games} />
     </>
   );
 }
