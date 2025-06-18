@@ -84,6 +84,7 @@ export function UpdateBrowseImage({ gameId }: { gameId: string }) {
             )}
             <Input
               type="file"
+              accept="image/*"
               onChange={(e) => setFile(e.target.files?.[0] || null)}
               className="cursor-pointer"
             />

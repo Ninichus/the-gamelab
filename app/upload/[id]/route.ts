@@ -20,7 +20,7 @@ const maxFileSize = {
 };
 const allowedFileTypes = {
   carousel_file: ["image/*", "video/*"],
-  browse_image: ["image/*", "video/*"],
+  browse_image: ["image/*"], //For now, only images
   game_archive: [],
 };
 //TODO : restrict type for game_archive ?
