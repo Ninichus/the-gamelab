@@ -5,6 +5,7 @@ import { games, files as filesTable } from "@/db/schema";
 import { canWrite } from "@/lib/permissions";
 import { deleteFile as deleteFileFromS3 } from "../client-s3";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function deleteGame(gameId: string) {
   const [game] = await db
@@ -64,5 +65,5 @@ export async function deleteGame(gameId: string) {
   }
 
   revalidatePath(`/game/${gameId}`);
-  return { success: true };
+  return redirect("/");
 }

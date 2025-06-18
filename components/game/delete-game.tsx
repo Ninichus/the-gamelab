@@ -50,14 +50,14 @@ export function DeleteGameBanner({ gameId }: { gameId: string }) {
                   onClick={async () => {
                     setOpen(false);
                     const result = await deleteGame(gameId);
-                    if (result.success) {
-                      window.location.href = "/";
-                    } else {
+                    if (!result.success) {
                       //TODO handle error properly
                       alert(
                         result.error ||
                           "An error occurred while deleting the game."
                       );
+                    } else {
+                      window.location.href = "/";
                     }
                   }}
                 >
