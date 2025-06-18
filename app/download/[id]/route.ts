@@ -41,7 +41,7 @@ export async function GET(
   }
 
   const headers = new Headers();
-  headers.append("Content-Disposition", 'attachment; filename="' + dbFile.name);
+  headers.append("Content-Disposition", "attachment; filename=" + dbFile.name);
 
   if (dbFile.type === "game_archive") {
     await db
