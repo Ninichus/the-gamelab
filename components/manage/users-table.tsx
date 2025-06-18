@@ -1,7 +1,6 @@
 "use server";
 
 import { Button } from "@/components/ui/button";
-import { Avatar } from "@/components/avatar";
 import { Eye } from "lucide-react";
 import Link from "next/link";
 import {
@@ -13,8 +12,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ToggleAdminButton } from "./toogle-admin-button";
+//TODO better types
+type User = {
+  id: number;
+  username: string;
+  email: string;
+  isAdmin: boolean;
+  gamesCreated: number;
+  firstName: string;
+  lastName: string;
+};
 
-export async function UsersTable({ users }: { users: any[] }) {
+export async function UsersTable({ users }: { users: User[] }) {
   return (
     <Table>
       <TableHeader>
