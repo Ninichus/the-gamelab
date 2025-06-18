@@ -8,5 +8,7 @@ export function GameDescription({
     description: string | null;
   };
 }) {
-  return <p>{game.description}</p>;
+  return (
+    <pre className="font-sans whitespace-pre-wrap">{game.description}</pre>
+  );
 }

@@ -26,7 +26,7 @@ export function SpecsList({
           defaultValue={game.specs ?? ""}
         />
       ) : (
-        <p>{game.specs}</p>
+        <pre className="font-sans whitespace-pre-wrap">{game.specs}</pre>
       )}
     </div>
   );
