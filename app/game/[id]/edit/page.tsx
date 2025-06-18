@@ -83,7 +83,11 @@ export default async function EditGamePage({
           <Tabs defaultValue="description" className="w-full">
             <TabsList>
               {Object.entries(tabs).map(([key, { display, icon }]) => (
-                <TabsTrigger key={key} value={key} className="gap-1">
+                <TabsTrigger
+                  key={key}
+                  value={key}
+                  className="gap-1 cursor-pointer"
+                >
                   {icon}
                   {display}
                 </TabsTrigger>
