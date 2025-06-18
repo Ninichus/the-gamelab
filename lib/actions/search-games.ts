@@ -6,7 +6,6 @@ import {
   games as gamesTable,
   tags as tagsTable,
 } from "@/db/schema";
-import { canRead } from "../permissions";
 
 type GameWithTags = {
   id: string;
