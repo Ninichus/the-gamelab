@@ -1,6 +1,6 @@
 "use client";
 
-export default function GlobalError() {
+export default function UnauthorizedPage() {
   return (
     <div className="flex flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-md text-center">

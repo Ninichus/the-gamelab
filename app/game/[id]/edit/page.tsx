@@ -53,6 +53,7 @@ export default async function EditGamePage({
 
   if (!author && !user.isAdmin) {
     unauthorized();
+    return;
   }
 
   const tabs = await buildTabs({ game, edit: true });

@@ -57,6 +57,7 @@ export default async function GamePage({
 
     if (!author && !user.isAdmin) {
       unauthorized();
+      return;
     }
     canEdit = true;
   } else {
