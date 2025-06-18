@@ -4,6 +4,8 @@ import { db } from "@/db";
 import { games, authors } from "@/db/schema/";
 import { NextResponse } from "next/server";
 
+//TODO : optimize this, we don't need to create a new game if the user already has a void one
+
 const nanoid = customAlphabet("1234567890abcdef");
 
 export const dynamic = "force-dynamic";
