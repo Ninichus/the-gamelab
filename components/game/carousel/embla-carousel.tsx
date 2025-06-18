@@ -250,25 +250,44 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                     >
                       {file && (
                         <div className="mb-4 flex justify-center">
-                          <Image
-                            src={URL.createObjectURL(file)}
-                            alt="Selected preview"
-                            className="max-h-48 rounded shadow aspect-video object-cover"
-                            width={1920}
-                            height={1080}
-                            loading="lazy"
-                            onLoad={(e) =>
-                              URL.revokeObjectURL(
-                                (e.target as HTMLImageElement).src
-                              )
-                            }
-                          />
+                          {file.type.startsWith("image/") ? (
+                            <Image
+                              src={URL.createObjectURL(file)}
+                              alt="Selected preview"
+                              className="max-h-48 rounded shadow aspect-video object-cover"
+                              width={1920}
+                              height={1080}
+                              loading="lazy"
+                              onLoad={(e) =>
+                                URL.revokeObjectURL(
+                                  (e.target as HTMLImageElement).src
+                                )
+                              }
+                            />
+                          ) : (
+                            <video
+                              className="max-h-48 rounded shadow aspect-video object-cover"
+                              width={1920}
+                              height={1080}
+                              controls
+                              // Important: revoke after metadata loads
+                              onLoadedMetadata={(e) =>
+                                URL.revokeObjectURL(
+                                  (e.target as HTMLVideoElement).src
+                                )
+                              }
+                              src={URL.createObjectURL(file)}
+                            />
+                          )}
                         </div>
                       )}
+
                       <Input
                         type="file"
                         accept="image/*,video/*"
-                        onChange={(e) => setFile(e.target.files?.[0] || null)}
+                        onChange={(e) => {
+                          setFile(e.target.files?.[0] || null);
+                        }}
                         className="cursor-pointer"
                       />
                       <div className="flex flex-col sm:flex-row gap-2 mt-2">
