@@ -7,6 +7,7 @@ import { files } from "@/db/schema";
 import { customAlphabet } from "nanoid";
 import { NextRequest } from "next/server";
 import { eq, and } from "drizzle-orm";
+import { extractThumbnail } from "@/lib/actions/extract-thumbnail";
 
 export const dynamic = "force-dynamic";
 
@@ -118,8 +119,21 @@ export async function POST(
           gameId,
           userId: user.id,
         });
-        //TODO : extract a thumbnail
-        //TODO : delete thumbnails when game / video deleted
+
+        try {
+          const thumbnail = await extractThumbnail(
+            file,
+            `${fileId.slice(0, -2)}_t`
+          );
+          await uploadFile(`${fileId.slice(0, -2)}_t`, thumbnail);
+        } catch (e) {
+          console.error("Error uploading thumbnail to S3", e);
+          tx.rollback();
+          return Response.json(
+            { success: false, error: "Error uploading thumbnail" },
+            { status: 500 }
+          );
+        }
       }
 
       await tx.insert(files).values({

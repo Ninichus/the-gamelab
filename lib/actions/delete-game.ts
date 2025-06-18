@@ -28,7 +28,23 @@ export async function deleteGame(gameId: string) {
         .from(filesTable)
         .where(eq(filesTable.gameId, gameId));
 
-      //First delete thumbnails
+      // First delete all non-thumbnail files
+      // We could sort files by type if needed, but here we just filter
+      await Promise.all(
+        files
+          .filter((file) => file.type !== "carousel_video_thumbnail")
+          .map(async (file) => {
+            try {
+              await deleteFileFromS3(file.id);
+              await tx.delete(filesTable).where(eq(filesTable.id, file.id));
+            } catch (e) {
+              console.error("Error deleting file from S3", e);
+              tx.rollback();
+            }
+          })
+      );
+
+      // Then delete all thumbnails
       await Promise.all(
         files
           .filter((file) => file.type === "carousel_video_thumbnail")
@@ -43,20 +59,6 @@ export async function deleteGame(gameId: string) {
           })
       );
 
-      //Then delete other files
-      await Promise.all(
-        files
-          .filter((file) => file.type !== "carousel_video_thumbnail")
-          .map(async (file) => {
-            try {
-              await deleteFileFromS3(file.id);
-              await tx.delete(filesTable).where(eq(filesTable.id, file.id));
-            } catch (e) {
-              console.error("Error deleting file from S3", e);
-              tx.rollback();
-            }
-          })
-      );
       await tx.delete(games).where(eq(games.id, gameId));
     });
   } catch (error) {

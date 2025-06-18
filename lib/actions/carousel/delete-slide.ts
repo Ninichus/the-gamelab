@@ -18,7 +18,7 @@ export async function deleteSlide({
   }
 
   const files = await db
-    .select({ id: filesTable.id })
+    .select({ id: filesTable.id, type: filesTable.type })
     .from(filesTable)
     .where(
       and(eq(filesTable.gameId, gameId), eq(filesTable.index, slideIndex))
@@ -30,20 +30,41 @@ export async function deleteSlide({
 
   try {
     await db.transaction(async (tx) => {
-      files.forEach(async (file) => {
-        const fileId = file.id;
-        if (!fileId) {
-          throw new Error("File ID is missing");
-        }
-        try {
-          await deleteFileFromS3(fileId);
-          await tx.delete(filesTable).where(eq(filesTable.id, fileId));
-        } catch (e) {
-          console.error("Error deleting file from S3", e);
-          tx.rollback();
-          throw new Error("Error deleting file");
-        }
-      });
+      // First delete the real media
+      files
+        .filter((file) => file.type !== "carousel_video_thumbnail")
+        .forEach(async (file) => {
+          const fileId = file.id;
+          if (!fileId) {
+            throw new Error("File ID is missing");
+          }
+          try {
+            await deleteFileFromS3(fileId);
+            await tx.delete(filesTable).where(eq(filesTable.id, fileId));
+          } catch (e) {
+            console.error("Error deleting file from S3", e);
+            tx.rollback();
+            throw new Error("Error deleting file");
+          }
+        });
+
+      // Then delete thumbnail if it exists
+      files
+        .filter((file) => file.type === "carousel_video_thumbnail")
+        .forEach(async (file) => {
+          const fileId = file.id;
+          if (!fileId) {
+            throw new Error("File ID is missing");
+          }
+          try {
+            await deleteFileFromS3(fileId);
+            await tx.delete(filesTable).where(eq(filesTable.id, fileId));
+          } catch (e) {
+            console.error("Error deleting file from S3", e);
+            tx.rollback();
+            throw new Error("Error deleting file");
+          }
+        });
     });
   } catch (error) {
     console.error("Error deleting file", error);
