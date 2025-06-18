@@ -10,7 +10,7 @@ export default function GlobalError() {
         </h1>
         <p className="mt-4 text-muted-foreground">
           You don&apos;t have permission to access this page. Please log in or
-          contact support for assistance.
+          contact us for assistance.
         </p>
       </div>
     </div>

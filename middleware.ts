@@ -16,7 +16,6 @@ export const config = {
    * - manifest.json (web app manifest file)
    * - robots.txt (robots file)
    * - browse (browse page)
-   * - contact (contact page)
    * - profile (profile page)
    * - / (main page)
    * - game (permissions handled in the route handler)
@@ -24,7 +23,7 @@ export const config = {
    */
 
   matcher:
-    "/((?!_next/static|_next/image|favicon.ico|apple-icon.png|icon.png|icon0.svg|icon1.png|web-app-manifest-192x192.png|web-app-manifest-512x512.png|auth|public|manifest.json|robots.txt|browse|contact|profile|$|game|download).*)",
+    "/((?!_next/static|_next/image|favicon.ico|apple-icon.png|icon.png|icon0.svg|icon1.png|web-app-manifest-192x192.png|web-app-manifest-512x512.png|auth|public|manifest.json|robots.txt|browse|profile|$|game|download).*)",
 };
 
 export async function middleware(request: NextRequest) {
