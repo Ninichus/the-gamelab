@@ -69,7 +69,10 @@ export async function searchGames({
             query.filters.averageRating[1] !== 10)
           ? lte(gamesTable.averageRating, query.filters.averageRating[1])
           : undefined,
-        query.filters.type ? eq(gamesTable.type, query.filters.type) : undefined
+        query.filters.type
+          ? eq(gamesTable.type, query.filters.type)
+          : undefined,
+        eq(gamesTable.status, "published")
       )
     )
     .leftJoin(tagsTable, eq(gamesTable.id, tagsTable.gameId))
@@ -99,16 +102,57 @@ export async function searchGames({
     }
   });
 
-  // Filter games by permissions
+  // We don't need to check permissions here because we are only fetching published games.
   const games = Array.from(gamesMap.values());
-  const permissions = await Promise.all(
-    games.map(async (game) => ({
-      id: game.id,
-      canRead: await canRead(game.id),
-    }))
-  );
+  return games;
+}
 
-  return games.filter(
-    (game) => permissions.find((p) => p.id === game.id)?.canRead
-  );
+export async function getInitialGames() {
+  const result = await db
+    .select({
+      games: {
+        id: gamesTable.id,
+        name: gamesTable.name,
+        type: gamesTable.type,
+        status: gamesTable.status,
+        averageRating: gamesTable.averageRating,
+      },
+      tags: {
+        id: tagsTable.id,
+        name: tagsTable.name,
+      },
+      imagePreview: filesTable.id,
+    })
+    .from(gamesTable)
+    .where(eq(gamesTable.status, "published"))
+    .leftJoin(tagsTable, eq(gamesTable.id, tagsTable.gameId))
+    .leftJoin(
+      filesTable,
+      and(
+        eq(gamesTable.id, filesTable.gameId),
+        eq(filesTable.type, "browse_image")
+      )
+    )
+    .limit(20);
+  //.offset(offset); //TODO : handle offset
+
+  const gamesMap = new Map<string, GameWithTags>();
+
+  result.map((row) => {
+    const game = row.games;
+    const tag = row.tags;
+    const imagePreview = row.imagePreview ? row.imagePreview : undefined;
+
+    if (!gamesMap.has(game.id)) {
+      gamesMap.set(game.id, { ...game, tags: [], imagePreview });
+    }
+
+    if (tag && tag.id !== undefined) {
+      gamesMap.get(game.id)!.tags!.push(tag);
+    }
+  });
+
+  // All games are published, so we don't need to filter by permissions here.
+  const games = Array.from(gamesMap.values());
+  return games;
 }

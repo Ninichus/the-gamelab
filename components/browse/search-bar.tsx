@@ -3,7 +3,7 @@
 import { Funnel, Search } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { searchGames } from "@/lib/actions/search-games";
+import { getInitialGames, searchGames } from "@/lib/actions/search-games";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -53,7 +53,7 @@ type Filters = {
 
 export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
   const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState(" ");
+  const [search, setSearch] = useState("");
   const [selectedFilters, setSelectedFilters] = useState<Filters>({
     type: undefined,
     averageRating: [1, 10],
@@ -93,12 +93,10 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
   useEffect(() => {
     if (initialized.current) return;
     initialized.current = true;
-    setSearch("");
-    setFilters({
-      type: undefined,
-      averageRating: [1, 10],
-      tags: [],
-    });
+    (async () => {
+      const games = await getInitialGames();
+      setGames(games);
+    })();
   }, []);
 
   return (
