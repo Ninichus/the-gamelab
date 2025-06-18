@@ -37,7 +37,7 @@ export async function MobileNav({
                 key={link.href}
                 href={link.href}
                 className="text-lg font-medium text-muted-foreground hover:text-foreground"
-                prefetch={link.href !== "/create"}
+                prefetch={link.href !== "/create" && link.href !== "/manage"}
               >
                 {link.title}
               </Link>
