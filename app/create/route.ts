@@ -3,6 +3,7 @@ import { customAlphabet } from "nanoid";
 import { db } from "@/db";
 import { games, authors } from "@/db/schema/";
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 //TODO : optimize this, we don't need to create a new game if the user already has a void one
 
@@ -37,6 +38,7 @@ export async function GET() {
     return new Response("Error creating game", { status: 500 });
   }
 
+  revalidatePath(`/profile/${user.username}`);
   return NextResponse.redirect(
     new URL(`/game/${gameId}/edit`, process.env.WEB_URL)
   );

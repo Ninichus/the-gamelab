@@ -39,5 +39,6 @@ export async function updateGameStatus({ gameId }: { gameId: string }) {
   }
 
   revalidatePath(`/game/${gameId}`);
+  revalidatePath(`/browse`);
   return { success: true };
 }
