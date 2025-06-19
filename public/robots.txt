@@ -1,40 +1,28 @@
-User-agent: Applebot
+User-agent: Googlebot
 Allow: /
 
-User-agent: baiduspider
+User-agent: Applebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Facebot
+User-agent: DuckDuckBot
 Allow: /
 
-User-agent: Googlebot
+User-agent: Qwantbot
 Allow: /
 
-User-agent: msnbot
+User-agent: InternetArchive
 Allow: /
 
-User-agent: Naverbot
+User-agent: KagiBot
 Allow: /
 
-User-agent: seznambot
+User-agent: MarginaliaBot
 Allow: /
 
-User-agent: Slurp
-Allow: /
-
-User-agent: teoma
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: Yandex
-Allow: /
-
-User-agent: Yeti
+User-agent: MojeekBot
 Allow: /
 
 User-agent: *
