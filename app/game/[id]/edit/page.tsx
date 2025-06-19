@@ -16,6 +16,7 @@ import { ManageGameButtons } from "@/components/game/manage-game-buttons";
 import { DeleteGameBanner } from "@/components/game/delete-game";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { UpdateBrowseImage } from "@/components/update-browse-image";
+import { Error } from "@/components/error";
 
 //TODO better error handling + use canWrite and redirect accordingly
 //TODO : button to delete image + add preview image + move images
@@ -27,18 +28,12 @@ export default async function EditGamePage({
 }) {
   const gameId = (await params).id;
   if (!gameId) {
-    return Response.json(
-      { success: false, error: "Game ID is required" },
-      { status: 400 }
-    );
+    return <Error message="Game ID is required" />;
   }
 
   const [game] = await db.select().from(games).where(eq(games.id, gameId));
   if (!game) {
-    return Response.json(
-      { success: false, error: "Invalid Game ID" },
-      { status: 400 }
-    );
+    return <Error message="Invalid Game ID" />;
   }
 
   const user = await getUser();
@@ -52,8 +47,7 @@ export default async function EditGamePage({
     .where(and(eq(authors.gameId, gameId), eq(authors.userId, user.id)));
 
   if (!author && !user.isAdmin) {
-    unauthorized();
-    return;
+    return unauthorized();
   }
 
   const tabs = await buildTabs({ game, edit: true });

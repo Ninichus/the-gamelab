@@ -14,6 +14,7 @@ import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 import { EditGameBanner } from "@/components/game/edit-game-banner";
 import { RatingCard } from "@/components/game/rating/rating-card";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Error } from "@/components/error";
 
 //TODO use canRead and redirect accordingly
 
@@ -26,18 +27,12 @@ export default async function GamePage({
 }) {
   const gameId = (await params).id;
   if (!gameId) {
-    return Response.json(
-      { success: false, error: "Game ID is required" },
-      { status: 400 }
-    );
+    return <Error message="Game ID is required" />;
   }
 
   const [game] = await db.select().from(games).where(eq(games.id, gameId));
   if (!game) {
-    return Response.json(
-      { success: false, error: "Invalid Game ID" },
-      { status: 400 }
-    );
+    return <Error message="Invalid Game ID" />;
   }
 
   let canEdit = false;
@@ -56,8 +51,7 @@ export default async function GamePage({
       .limit(1);
 
     if (!author && !user.isAdmin) {
-      unauthorized();
-      return;
+      return unauthorized();
     }
     canEdit = true;
   } else {
