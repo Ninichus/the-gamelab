@@ -3,7 +3,6 @@ import "server-only";
 import { NextRequest, NextResponse } from "next/server";
 import { getSession, sessionOptions } from "./lib/session";
 import { sealData } from "iron-session";
-import { redirectToLogin } from "./lib/actions/redirect-to-login";
 
 export const config = {
   /*
@@ -32,7 +31,12 @@ export async function middleware(request: NextRequest) {
   const session = await getSession();
 
   if (!session.user) {
-    return redirectToLogin(request.nextUrl.pathname);
+    return NextResponse.redirect(
+      new URL(
+        `/auth/login?from=${encodeURIComponent(request.nextUrl.pathname)}`,
+        process.env.WEB_URL
+      )
+    );
   }
 
   let updatedSession: string | null = null;
@@ -54,7 +58,12 @@ export async function middleware(request: NextRequest) {
         value: updatedSession,
       });
     } catch {
-      return redirectToLogin(request.nextUrl.pathname);
+      return NextResponse.redirect(
+        new URL(
+          `/auth/login?from=${encodeURIComponent(request.nextUrl.pathname)}`,
+          process.env.WEB_URL
+        )
+      );
     }
   }
 

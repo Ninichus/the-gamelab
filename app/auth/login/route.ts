@@ -35,12 +35,16 @@ export async function GET(request: NextRequest) {
   const from = new URL(request.url).searchParams.get("from");
   const cookiesStore = await cookies();
   if (from && !cookiesStore.get("redirectTo")) {
-    response.cookies.set("redirectTo", new URL(from).pathname, {
-      maxAge: 60 * 5, // 5 minutes
-      secure: true,
-      sameSite: "lax",
-      httpOnly: true,
-    });
+    response.cookies.set(
+      "redirectTo",
+      new URL(from, process.env.WEB_URL).pathname,
+      {
+        maxAge: 60 * 5, // 5 minutes
+        secure: true,
+        sameSite: "lax",
+        httpOnly: true,
+      }
+    );
   }
 
   // redirect the user to the oidc login page

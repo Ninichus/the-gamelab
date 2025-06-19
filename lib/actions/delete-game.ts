@@ -67,5 +67,7 @@ export async function deleteGame(gameId: string) {
   }
 
   revalidatePath(`/game/${gameId}`);
+  revalidatePath(`/profile`);
+  if (game.status === "published") revalidatePath(`/browse`);
   return redirect("/");
 }

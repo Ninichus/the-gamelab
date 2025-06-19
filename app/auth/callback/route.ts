@@ -56,6 +56,9 @@ export async function GET(request: Request) {
   const cookiesStore = await cookies();
   const redirectTo = cookiesStore.get("redirectTo")?.value || "/";
   cookiesStore.delete("redirectTo");
+  if (redirectTo !== "/") {
+    console.log(`Redirecting to ${redirectTo} after login`);
+  }
   return NextResponse.redirect(new URL(redirectTo, webUrl));
 }
 
