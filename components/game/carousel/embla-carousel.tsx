@@ -20,6 +20,7 @@ import Image from "next/image";
 import { CircleX, Redo, Trash, Undo } from "lucide-react";
 import { moveSlide } from "@/lib/actions/carousel/move-slide";
 import { deleteSlide } from "@/lib/actions/carousel/delete-slide";
+import { toast } from "sonner";
 
 //TODO : lazy load images and videos
 //TODO : fullscreen image on click
@@ -106,12 +107,14 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                         title="Move Left"
                         className="cursor-pointer hover:bg-muted/10"
                         onClick={async () => {
-                          await moveSlide({
+                          const result = await moveSlide({
                             gameId,
                             slideIndex: index,
                             delta: -1,
                           });
-                          //TODO : handle error
+                          if (!result.success) {
+                            toast.error(result.error || "Failed to move slide");
+                          }
                         }}
                       >
                         <Undo className="w-5 h-5" />
@@ -122,11 +125,15 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                         title="Delete"
                         className="cursor-pointer hover:bg-red-800"
                         onClick={async () => {
-                          await deleteSlide({
+                          const result = await deleteSlide({
                             gameId,
                             slideIndex: index,
                           });
-                          //TODO : handle error
+                          if (!result.success) {
+                            toast.error(
+                              result.error || "Failed to delete slide"
+                            );
+                          }
                         }}
                       >
                         <Trash className="w-5 h-5" />
@@ -145,12 +152,14 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                         title="Move Right"
                         className="cursor-pointer hover:bg-muted/10"
                         onClick={async () => {
-                          await moveSlide({
+                          const result = await moveSlide({
                             gameId,
                             slideIndex: index,
                             delta: 1,
                           });
-                          //TODO : handle error
+                          if (!result.success) {
+                            toast.error(result.error || "Failed to move slide");
+                          }
                         }}
                       >
                         <Redo className="w-5 h-5" />
@@ -238,7 +247,9 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                             setIsUploading(false);
                             window.location.reload();
                           } else {
-                            //TODO : alert of an error
+                            toast.error(
+                              response.error || "Failed to upload file"
+                            );
                             setFileUploadProgress(0);
                             setFile(null);
                             setIsUploading(false);

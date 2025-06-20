@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { removeTag } from "@/lib/actions/tags/remove-tag";
+import { toast } from "sonner";
 
 export function RemoveTag({
   tagId,
@@ -16,11 +17,15 @@ export function RemoveTag({
       size="icon"
       className="group size-4 p-0 cursor-pointer"
       onClick={async () => {
-        await removeTag({
+        const result = await removeTag({
           gameId,
           tagId,
         });
-        //TODO Handle error
+        if (!result.success) {
+          toast.error(
+            result.error || "An error occurred while removing the tag."
+          );
+        }
       }}
     >
       <X className="size-3 group-hover:text-destructive" />

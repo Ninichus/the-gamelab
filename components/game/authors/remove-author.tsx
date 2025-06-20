@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { removeAuthor } from "@/lib/actions/authors/remove-author";
+import { toast } from "sonner";
 
 export function RemoveAuthor({
   gameId,
@@ -16,8 +17,12 @@ export function RemoveAuthor({
       size="icon"
       className="group size-8 p-0 cursor-pointer"
       onClick={async () => {
-        await removeAuthor({ gameId, userId });
-        //TODO Handle error
+        const result = await removeAuthor({ gameId, userId });
+        if (!result.success) {
+          toast.error(
+            result.error || "An error occurred while removing the author."
+          );
+        }
       }}
     >
       <X className="size-5 group-hover:text-destructive" />

@@ -2,6 +2,7 @@
 import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { deleteFile } from "@/lib/actions/files/delete-file";
+import { toast } from "sonner";
 
 export function DeleteFile({
   gameId,
@@ -16,11 +17,15 @@ export function DeleteFile({
       size="icon"
       className="group size-4 p-0 cursor-pointer"
       onClick={async () => {
-        await deleteFile({
+        const result = await deleteFile({
           gameId,
           fileId,
         });
-        //TODO Handle error
+        if (!result.success) {
+          toast.error(
+            result.error || "An error occurred while deleting the file."
+          );
+        }
       }}
     >
       <Trash className="size-3 group-hover:text-destructive" />

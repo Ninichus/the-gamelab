@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export function UpdateBrowseImage({ gameId }: { gameId: string }) {
   const [open, setOpen] = useState(false);
@@ -57,7 +58,9 @@ export function UpdateBrowseImage({ gameId }: { gameId: string }) {
                   setIsUploading(false);
                   window.location.reload();
                 } else {
-                  //TODO : alert of an error
+                  toast.error(
+                    response.error || "An error occurred while uploading."
+                  );
                   setFileUploadProgress(0);
                   setFile(null);
                   setIsUploading(false);

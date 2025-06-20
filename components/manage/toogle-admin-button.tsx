@@ -3,6 +3,7 @@
 import { ShieldCheck, ShieldOff } from "lucide-react";
 import { Button } from "../ui/button";
 import { toggleAdmin } from "@/lib/actions/manage/toggle-admin";
+import { toast } from "sonner";
 
 export function ToggleAdminButton({
   userId,
@@ -17,8 +18,12 @@ export function ToggleAdminButton({
       variant={isAdmin ? "destructive" : "default"}
       size="sm"
       onClick={async () => {
-        // TODO : handle errors
-        await toggleAdmin({ userId });
+        const result = await toggleAdmin({ userId });
+        if (!result.success) {
+          toast.error(
+            result.error || "An error occurred while toggling admin status."
+          );
+        }
       }}
     >
       {isAdmin ? (

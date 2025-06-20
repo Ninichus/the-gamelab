@@ -15,6 +15,7 @@ import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { editAuthor } from "@/lib/actions/authors/edit-author";
+import { toast } from "sonner";
 
 export function EditAuthor({
   gameId,
@@ -64,12 +65,14 @@ export function EditAuthor({
           </DialogClose>
           <Button
             onClick={async () => {
-              await editAuthor({
+              const result = await editAuthor({
                 gameId,
                 userId: authorId,
                 role: roleValue !== "" ? roleValue : undefined,
               });
-              //TODO: Handle error
+              if (!result.success) {
+                toast.error(result.error || "Failed to edit author");
+              }
               setOpen(false);
               setRoleValue("");
             }}

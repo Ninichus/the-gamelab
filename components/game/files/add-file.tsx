@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { toast } from "sonner";
 
 export function AddFile({ gameId, index }: { gameId: string; index: number }) {
   const [open, setOpen] = useState(false);
@@ -58,7 +59,7 @@ export function AddFile({ gameId, index }: { gameId: string; index: number }) {
                   setIsUploading(false);
                   window.location.reload();
                 } else {
-                  //TODO : alert of an error
+                  toast.error(response.error || "Failed to upload file");
                   setFileUploadProgress(0);
                   setFile(null);
                   setIsUploading(false);

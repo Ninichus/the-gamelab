@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { addComment } from "@/lib/actions/comments/add-comment";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   comment: z
@@ -33,8 +34,10 @@ export function AddComment({ gameId }: { gameId: string }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(async (payload) => {
-          await addComment({ gameId, comment: payload.comment });
-          //TODO handle success or error here, e.g., show a toast notification
+          const result = await addComment({ gameId, comment: payload.comment });
+          if (!result.success) {
+            toast.error(result.error || "Failed to add comment");
+          }
           form.reset({ comment: "" });
         })}
       >

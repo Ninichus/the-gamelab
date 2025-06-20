@@ -12,6 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function DeleteGameBanner({ gameId }: { gameId: string }) {
   const [open, setOpen] = useState(false);
@@ -51,8 +52,7 @@ export function DeleteGameBanner({ gameId }: { gameId: string }) {
                     setOpen(false);
                     const result = await deleteGame(gameId);
                     if (!result.success) {
-                      //TODO handle error properly
-                      alert(
+                      toast.error(
                         result.error ||
                           "An error occurred while deleting the game."
                       );

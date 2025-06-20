@@ -32,6 +32,7 @@ import { searchUsers } from "@/lib/actions/search-users";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 export function AddAuthor({
   gameId,
@@ -159,12 +160,14 @@ export function AddAuthor({
             onClick={async () => {
               if (!value) return;
 
-              await addAuthor({
+              const result = await addAuthor({
                 gameId,
                 userId: parseInt(value),
                 role: roleValue !== "" ? roleValue : undefined,
               });
-              //TODO: Handle error
+              if (!result.success) {
+                toast.error(result.error || "Failed to add author");
+              }
               setOpen(false);
               setValue("");
               setSearch("");

@@ -5,8 +5,6 @@ import { Error } from "@/components/error";
 import { AddTag } from "@/components/game/tags/add-tag";
 import { RemoveTag } from "@/components/game/tags/remove-tag";
 
-//TODO handle errors with toast
-
 export async function TagsList({
   game,
   edit = false,

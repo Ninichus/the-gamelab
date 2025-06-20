@@ -16,8 +16,7 @@ import {
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { addTag } from "@/lib/actions/tags/add-tag";
-
-//TODO handle errors
+import { toast } from "sonner";
 
 export function AddTag({
   gameId,
@@ -72,7 +71,13 @@ export function AddTag({
               <CommandItem
                 value={searchValue}
                 onSelect={async () => {
-                  await addTag({ gameId, tagName: searchValue });
+                  const result = await addTag({ gameId, tagName: searchValue });
+                  if (!result.success) {
+                    toast.error(
+                      result.error ||
+                        "An error occurred while creating the tag."
+                    );
+                  }
                   setOpen(false);
                 }}
                 className="flex items-center justify-center gap-1 italic hover:bg-accent hover:text-accent-foreground cursor-pointer"
@@ -88,7 +93,16 @@ export function AddTag({
                     key={tag.name}
                     value={tag.name}
                     onSelect={async (currentValue: string) => {
-                      await addTag({ gameId, tagName: currentValue });
+                      const result = await addTag({
+                        gameId,
+                        tagName: currentValue,
+                      });
+                      if (!result.success) {
+                        toast.error(
+                          result.error ||
+                            "An error occurred while adding the tag."
+                        );
+                      }
                       setOpen(false);
                     }}
                     className="cursor-pointer hover:bg-accent hover:text-accent-foreground"

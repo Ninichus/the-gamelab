@@ -2,6 +2,7 @@
 import { CommentRatings } from "@/components/ui/rating";
 import Link from "next/link";
 import { modifyRating } from "@/lib/actions/ratings/rate";
+import { toast } from "sonner";
 
 export function ModifyRating({
   gameId,
@@ -16,7 +17,10 @@ export function ModifyRating({
         rating={userRating || 0}
         totalStars={10}
         onRatingChange={async (currentRating: number) => {
-          await modifyRating({ gameId, rating: currentRating });
+          const result = await modifyRating({ gameId, rating: currentRating });
+          if (!result.success) {
+            toast.error(result.error || "Failed to change rating");
+          }
         }}
       />
       <p className="text-sm text-gray-500">
