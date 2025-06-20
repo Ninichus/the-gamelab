@@ -7,6 +7,7 @@ import {
   SheetTitle,
   SheetTrigger,
   SheetDescription,
+  SheetClose,
 } from "@/components/ui/sheet";
 import { GameLabIcon } from "./gamelab-icon";
 
@@ -33,14 +34,16 @@ export async function MobileNav({
           </SheetTitle>
           <SheetDescription className="flex flex-col space-y-4 ml-5 mt-5">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-lg font-medium text-muted-foreground hover:text-foreground"
-                prefetch={link.href !== "/create" && link.href !== "/manage"}
-              >
-                {link.title}
-              </Link>
+              <SheetClose asChild>
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-lg font-medium text-muted-foreground hover:text-foreground"
+                  prefetch={link.href !== "/create" && link.href !== "/manage"}
+                >
+                  {link.title}
+                </Link>
+              </SheetClose>
             ))}
           </SheetDescription>
         </SheetHeader>
