@@ -1,6 +1,6 @@
 "use server";
 import { db } from "@/db";
-import { eq, InferInsertModel } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { games } from "@/db/schema";
 import { canWrite } from "@/lib/permissions";
 import { revalidatePath } from "next/cache";
