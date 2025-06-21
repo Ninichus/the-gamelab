@@ -55,7 +55,6 @@ export async function modifyRating({
     await db.update(games).set({ averageRating }).where(eq(games.id, gameId));
   } catch (error) {
     console.error("Error modifying rating:", error);
-    // TODO Handle the error as needed (e.g., log it, throw an error, etc.)
     return { success: false, error: "Failed to change rating" };
   }
 

@@ -53,7 +53,7 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
     tags: [],
   }); //Filters used to query
 
-  //TODO handle tags ?
+  //TODO handle tags filtering ?
 
   useQuery({
     //TODO : use isLoading to show a loading state

@@ -24,7 +24,7 @@ export async function updateGameStatus({ gameId }: { gameId: string }) {
     return { success: false, error: "Game is pending approval" };
   }
 
-  //TODO : add approval by admin
+  //TODO : add approval by admin ?
   const newStatus = game.status === "published" ? "private" : "published";
 
   try {

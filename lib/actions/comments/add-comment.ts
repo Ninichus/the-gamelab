@@ -31,7 +31,6 @@ export async function addComment({
     });
   } catch (error) {
     console.error("Error adding comment:", error);
-    // TODO Handle the error as needed (e.g., log it, throw an error, etc.)
     return { success: false, error: "Failed to add comment" };
   }
 

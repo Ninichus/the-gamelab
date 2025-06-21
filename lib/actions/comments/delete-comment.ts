@@ -28,7 +28,6 @@ export async function deleteComment({
     await db.delete(comments).where(eq(comments.id, commentId));
   } catch (error) {
     console.error("Error deleting comment:", error);
-    // TODO Handle the error as needed (e.g., log it, throw an error, etc.)
     return { success: false, error: "Failed to delete comment" };
   }
 

@@ -19,7 +19,6 @@ import { UpdateBrowseImage } from "@/components/update-browse-image";
 import { Error } from "@/components/error";
 
 //TODO better error handling + use canWrite and redirect accordingly
-//TODO : button to delete image + add preview image + move images
 
 export default async function EditGamePage({
   params,
