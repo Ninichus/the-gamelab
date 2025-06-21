@@ -3,19 +3,7 @@ import { useState } from "react";
 import { SearchBar } from "@/components/browse/search-bar";
 import { GamesList } from "@/components/browse/games-list";
 import { QueryProvider } from "@/components/query-provider";
-
-type Game = {
-  id: string;
-  name: string;
-  type: "board_game" | "cards_game" | "video_game";
-  status: string;
-  tags?: {
-    id: number;
-    name: string;
-  }[];
-  averageRating: number | null;
-  imagePreview?: string;
-};
+import { Game } from "@/lib/types/games";
 
 export default function BrowsePage() {
   const [games, setGames] = useState<Game[]>([]);
