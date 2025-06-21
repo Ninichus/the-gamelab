@@ -30,6 +30,8 @@ Upon completion, those images are stored on gitlab's container registry.
 Then, a webhook sends an http post request to the production server. The latter pulls new images and restarts everything.
 
 A nginx service runs on the server, handling routes. It redirects the-gamelab.cs-campus.fr toward gamelab.cs-campus.fr, and forces https.
+Some security features have been activated (http2, hsts...)
+Between nginx and the website, I implemented [Anubis](https://anubis.techaro.lol). It protects the website against scrappers and some non-desired crawlers. It helps the server at better handling the traffic.
 
 ## Authentication
 
