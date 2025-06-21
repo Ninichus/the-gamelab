@@ -1,12 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { updateGameStatus } from "@/lib/actions/update-game-status";
+import { GameStatus } from "@/lib/types/games";
 import Link from "next/link";
 
 export function ManageGameButtons({
   game,
 }: {
-  game: { id: string; status: "published" | "private" | "pending" };
+  game: { id: string; status: GameStatus };
 }) {
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-2">

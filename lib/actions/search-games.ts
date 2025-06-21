@@ -6,19 +6,7 @@ import {
   games as gamesTable,
   tags as tagsTable,
 } from "@/db/schema";
-
-type GameWithTags = {
-  id: string;
-  name: string;
-  type: "board_game" | "cards_game" | "video_game";
-  status: string;
-  tags?: {
-    id: number;
-    name: string;
-  }[];
-  averageRating: number | null;
-  imagePreview?: string;
-};
+import { GameType, Game } from "../types/games";
 
 export async function searchGames({
   query,
@@ -28,7 +16,7 @@ export async function searchGames({
   query: {
     search: string;
     filters: {
-      type?: "board_game" | "cards_game" | "video_game";
+      type?: GameType;
       averageRating?: [number, number];
       tags?: string[];
     };
@@ -85,7 +73,7 @@ export async function searchGames({
     .limit(limit)
     .offset(offset);
 
-  const gamesMap = new Map<string, GameWithTags>();
+  const gamesMap = new Map<string, Game>();
 
   result.map((row) => {
     const game = row.games;
@@ -133,9 +121,9 @@ export async function getInitialGames() {
       )
     )
     .limit(20);
-  //.offset(offset); //TODO : handle offset
+  //.offset(offset); //TODO : handle offset, so that more games are loaded on scroll
 
-  const gamesMap = new Map<string, GameWithTags>();
+  const gamesMap = new Map<string, Game>();
 
   result.map((row) => {
     const game = row.games;

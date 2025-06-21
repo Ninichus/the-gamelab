@@ -12,16 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ToggleAdminButton } from "./toogle-admin-button";
-//TODO better types
-type User = {
-  id: number;
-  username: string;
-  email: string;
-  isAdmin: boolean;
-  gamesCreated: number;
-  firstName: string;
-  lastName: string;
-};
+import { User } from "@/lib/types/users";
 
 export async function UsersTable({ users }: { users: User[] }) {
   return (

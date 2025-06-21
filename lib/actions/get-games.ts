@@ -9,20 +9,7 @@ import {
   files as filesTable,
 } from "@/db/schema";
 import { canRead } from "@/lib/permissions";
-
-type GameWithTags = {
-  id: string;
-  name: string;
-  type: "board_game" | "cards_game" | "video_game";
-  status: string;
-  tags?: {
-    id: number;
-    name: string;
-  }[];
-  averageRating: number | null;
-  imagePreview?: string;
-  role?: string;
-};
+import { Game } from "../types/games";
 
 export async function getGames(username: string) {
   const result = await db
@@ -54,7 +41,7 @@ export async function getGames(username: string) {
     )
     .where(eq(users.username, username));
 
-  const gamesMap = new Map<string, GameWithTags>();
+  const gamesMap = new Map<string, Game>();
 
   result.map((row) => {
     const game = row.games;

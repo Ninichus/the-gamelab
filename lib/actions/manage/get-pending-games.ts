@@ -7,24 +7,12 @@ import {
   files as filesTable,
 } from "@/db/schema";
 import { getUser } from "@/lib/session";
-
-type GameWithTags = {
-  id: string;
-  name: string;
-  type: "board_game" | "cards_game" | "video_game";
-  status: string;
-  tags?: {
-    id: number;
-    name: string;
-  }[];
-  averageRating: number | null;
-  imagePreview?: string;
-};
+import { Game } from "@/lib/types/games";
 
 export async function getPendingGames(): Promise<
   | {
       success: true;
-      games: GameWithTags[];
+      games: Game[];
     }
   | {
       success: false;
@@ -63,7 +51,7 @@ export async function getPendingGames(): Promise<
     )
     .orderBy(asc(gamesTable.updatedAt));
 
-  const gamesMap = new Map<string, GameWithTags>();
+  const gamesMap = new Map<string, Game>();
 
   result.map((row) => {
     const game = row.games;

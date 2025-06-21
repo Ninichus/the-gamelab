@@ -3,13 +3,7 @@ import { db } from "@/db";
 import { eq, and } from "drizzle-orm";
 import { files as filesTable } from "@/db/schema";
 import { canRead } from "@/lib/permissions";
-
-type File = {
-  id: string;
-  name: string;
-  index: number | null;
-  downloadCount: number;
-};
+import { File } from "@/lib/types/files";
 
 export async function getFiles(gameId: string): Promise<
   | {

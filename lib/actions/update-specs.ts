@@ -22,7 +22,6 @@ export async function updateGameSpecs(gameId: string, specs: string) {
     await db.update(games).set({ specs }).where(eq(games.id, gameId));
   } catch (error) {
     console.error("Error updating game specs:", error);
-    // TODO Handle the error as needed (e.g., log it, throw an error, etc.)
     return { success: false, error: "Failed to update game specs" };
   }
 

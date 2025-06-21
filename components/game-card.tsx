@@ -4,21 +4,7 @@ import Link from "next/link";
 import { CardHeader, CardContent, CardTitle } from "./ui/card";
 import { Clock, EyeOff, Star } from "lucide-react";
 import Image from "next/image";
-
-//TODO : definge types in /lib
-type Game = {
-  id: string;
-  name: string;
-  type: "board_game" | "cards_game" | "video_game";
-  status: string;
-  tags?: {
-    id: number;
-    name: string;
-  }[];
-  averageRating: number | null;
-  imagePreview?: string;
-  role?: string;
-};
+import { Game } from "@/lib/types/games";
 
 const legend = {
   board_game: "Board Game",

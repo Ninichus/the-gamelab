@@ -3,20 +3,13 @@ import { db } from "@/db";
 import { eq, and } from "drizzle-orm";
 import { comments as commentsTable, ratings, users } from "@/db/schema";
 import { canRead } from "@/lib/permissions";
+import { Comment } from "@/lib/types/comments";
 
 export async function getComments(gameId: string): Promise<
   | { success: false; error: string }
   | {
       success: true;
-      comments: {
-        id: number;
-        content: string;
-        authorFirstName: string;
-        authorLastName: string;
-        authorUsername: string;
-        authorRating: number | null;
-        createdAt: Date;
-      }[];
+      comments: Comment[];
     }
 > {
   if (!(await canRead(gameId))) {

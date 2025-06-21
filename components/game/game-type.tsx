@@ -1,4 +1,5 @@
 "use client";
+import { GameType as GameType_type } from "@/lib/types/games";
 import { Badge } from "../ui/badge";
 import {
   Select,
@@ -22,7 +23,7 @@ export function GameType({
   game,
   edit = false,
 }: {
-  game: { id: string; type: "board_game" | "cards_game" | "video_game" };
+  game: { id: string; type: GameType_type };
   edit?: boolean;
 }) {
   return edit ? (

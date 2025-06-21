@@ -22,7 +22,6 @@ export async function removeTag({
       .where(and(eq(tags.gameId, gameId), eq(tags.id, tagId)));
   } catch (error) {
     console.error("Error deleting tag:", error);
-    // TODO Handle the error as needed (e.g., log it, throw an error, etc.)
     return { success: false, error: "Failed to remove tag" };
   }
 

@@ -3,18 +3,13 @@ import { db } from "@/db";
 import { eq } from "drizzle-orm";
 import { authors as authorsTable, users } from "@/db/schema";
 import { canRead } from "@/lib/permissions";
+import { Author } from "@/lib/types/users";
 
 export async function getAuthors(gameId: string): Promise<
   | { success: false; error: string }
   | {
       success: true;
-      authors: {
-        id: number;
-        username: string;
-        first_name: string;
-        last_name: string;
-        role: string | null;
-      }[];
+      authors: Author[];
     }
 > {
   if (!(await canRead(gameId))) {

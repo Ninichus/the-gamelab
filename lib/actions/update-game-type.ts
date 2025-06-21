@@ -4,11 +4,9 @@ import { eq, InferInsertModel } from "drizzle-orm";
 import { games } from "@/db/schema";
 import { canWrite } from "@/lib/permissions";
 import { revalidatePath } from "next/cache";
+import { GameType } from "../types/games";
 
-export async function updateGameType(
-  gameId: string,
-  type: InferInsertModel<typeof games>["type"]
-) {
+export async function updateGameType(gameId: string, type: GameType) {
   const [game] = await db
     .select()
     .from(games)
@@ -26,7 +24,6 @@ export async function updateGameType(
     await db.update(games).set({ type }).where(eq(games.id, gameId));
   } catch (error) {
     console.error("Error updating game type:", error);
-    // TODO Handle the error as needed (e.g., log it, throw an error, etc.)
     return { success: false, error: "Failed to update game type" };
   }
 

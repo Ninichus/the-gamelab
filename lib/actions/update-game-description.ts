@@ -25,7 +25,6 @@ export async function updateGameDescription(
     await db.update(games).set({ description }).where(eq(games.id, gameId));
   } catch (error) {
     console.error("Error updating game description:", error);
-    // TODO Handle the error as needed (e.g., log it, throw an error, etc.)
     return { success: false, error: "Failed to update game description" };
   }
 

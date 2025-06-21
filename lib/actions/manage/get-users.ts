@@ -3,19 +3,12 @@ import { db } from "@/db";
 import { desc, eq, count } from "drizzle-orm";
 import { authors, users as usersTable } from "@/db/schema";
 import { getUser } from "@/lib/session";
+import { User } from "@/lib/types/users";
 
 export async function getUsers(): Promise<
   | {
       success: true;
-      users: {
-        id: number;
-        username: string;
-        email: string;
-        isAdmin: boolean;
-        gamesCreated: number;
-        firstName: string;
-        lastName: string;
-      }[];
+      users: User[];
     }
   | {
       success: false;

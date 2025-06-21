@@ -31,19 +31,7 @@ const typeLegend: Record<string, string> = {
   cards_game: "Cards Game",
   video_game: "Video Game",
 };
-
-type Game = {
-  id: string;
-  name: string;
-  type: "board_game" | "cards_game" | "video_game";
-  status: string;
-  tags?: {
-    id: number;
-    name: string;
-  }[];
-  averageRating: number | null;
-  imagePreview?: string;
-};
+import { Game } from "@/lib/types/games";
 
 type Filters = {
   type?: "board_game" | "cards_game" | "video_game" | "any";
