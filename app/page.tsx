@@ -1,9 +1,6 @@
-import { Gamepad2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="bg-gradient-to-r from-purple-600 via-blue-600 to-orange-500 text-white py-20 overflow-hidden mx-auto px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
