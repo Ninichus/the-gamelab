@@ -35,7 +35,7 @@ export function UpdateBrowseImage({ gameId }: { gameId: string }) {
           <DialogDescription>
             The Browse Image is the image displayed in the explore page. It
             should be representative of your game and should be in a 16:9 aspect
-            ratio.
+            ratio. By default, the first image in your carousel is used.
           </DialogDescription>
           <form
             onSubmit={(e) => {

@@ -75,10 +75,25 @@ export async function searchGames({
 
   const gamesMap = new Map<string, Game>();
 
-  result.map((row) => {
+  result.map(async (row) => {
     const game = row.games;
     const tag = row.tags;
-    const imagePreview = row.imagePreview ? row.imagePreview : undefined;
+    let imagePreview;
+    if (!row.imagePreview) {
+      [{ imagePreview }] = await db
+        .select({ imagePreview: filesTable.id })
+        .from(filesTable)
+        .where(
+          and(
+            eq(filesTable.gameId, game.id),
+            eq(filesTable.type, "carousel_image"),
+            eq(filesTable.index, 0)
+          )
+        )
+        .limit(1);
+    } else {
+      imagePreview = row.imagePreview;
+    }
 
     if (!gamesMap.has(game.id)) {
       gamesMap.set(game.id, { ...game, tags: [], imagePreview });
