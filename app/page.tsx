@@ -1,28 +1,7 @@
-import { Award, Gamepad2, Users } from "lucide-react";
+import { Gamepad2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
-
-const badges = [
-  {
-    title: "Game Showcase",
-    description:
-      "Display your creative video games and board games in our digital gallery",
-    icon: <Gamepad2 className="h-8 w-8" />,
-  },
-  {
-    title: "Community Lab",
-    description:
-      "Rate games, share insights, and collaborate with fellow student creators",
-    icon: <Users className="h-8 w-8" />,
-  },
-  {
-    title: "Learning Achievement",
-    description:
-      "Celebrate the innovative fusion of language education and game design",
-    icon: <Award className="h-8 w-8" />,
-  },
-];
 
 export default function Home() {
   return (
