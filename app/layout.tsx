@@ -17,7 +17,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "The GameLab",
-  description: "Where English Learning Meets Game Creation",
+  description:
+    "Welcome to the online showcase of the GameLab at CentraleSupélec. ",
 };
 
 export default function RootLayout({

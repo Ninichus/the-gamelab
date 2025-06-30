@@ -32,7 +32,7 @@ export default function Home() {
           <h2 className="text-5xl font-bold">The GameLab</h2>
 
           <p className="text-2xl mb-8 opacity-90 max-w-4xl mx-auto">
-            Where English Learning Meets Game Creation: Your Gaming Laboratory
+            Welcome to the online showcase of the GameLab at CentraleSupélec.
           </p>
         </div>
 
@@ -40,46 +40,32 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-8 text-lg leading-relaxed text-white">
             <div>
               <p className="mb-4">
-                The GameLab is your creative laboratory where English language
-                learning transforms into interactive gaming experiences.
-                Students become game designers, crafting unique digital and
-                board games during their language courses.
+                You’ll find here the projects created in the GameLab English
+                course. It is one of the myriad themes you can choose in your
+                first and second years at CentraleSupélec for your English
+                courses.
               </p>
               <p className="mb-4">
-                From Shakespeare-inspired word puzzles to historical adventure
-                games, our platform celebrates the intersection of language
-                mastery and creative game development.
+                Computer games, printable card games, tracking and learning
+                apps, and physical games all fall within the scope of the
+                GameLab.
               </p>
             </div>
             <div>
               <p className="mb-4">
-                Whether you&apos;ve designed a strategic board game exploring
-                British literature or coded an interactive journey through
-                English history, the GameLab is where your creations come to
-                life and reach fellow learners worldwide.
+                The GameLab is an experimental project class. The course offers
+                the space where you can invent, pitch, experiment with, and test
+                your game to create an authentic project by the end of the
+                semester.
               </p>
-              <p>
-                Join our community of student developers, discover innovative
-                games, share feedback, and celebrate the fusion of education and
-                entertainment!
-              </p>
+              <p>Feel free to download, test, and comment on the games.</p>
             </div>
           </div>
         </Card>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {badges.map((badge) => {
-            return (
-              <div className="text-center" key={badge.title}>
-                <div className="bg-white/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 border-2 border-white/30">
-                  {badge.icon}
-                </div>
-                <h4 className="text-xl font-semibold mb-2">{badge.title}</h4>
-                <p className="opacity-90">{badge.description}</p>
-              </div>
-            );
-          })}
-        </div>
+        <h4 className="text-xl font-semibold mb-12 w-full text-center">
+          See you in the Lab.
+        </h4>
 
         <div className="max-w-md mx-auto">
           <div className="flex items-center justify-center">
