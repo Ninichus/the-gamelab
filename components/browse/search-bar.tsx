@@ -1,9 +1,9 @@
 "use client";
 
 import { Funnel, Search } from "lucide-react";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getInitialGames, searchGames } from "@/lib/actions/search-games";
+import { searchGames } from "@/lib/actions/search-games";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -59,7 +59,6 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
     //TODO : use isLoading to show a loading state
     queryKey: ["games", search, filters],
     queryFn: async () => {
-      if (!search) return [];
       const games = await searchGames({
         query: {
           search,
@@ -76,16 +75,6 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
       return games;
     },
   });
-
-  const initialized = useRef(false);
-  useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
-    (async () => {
-      const games = await getInitialGames();
-      setGames(games);
-    })();
-  }, []);
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
