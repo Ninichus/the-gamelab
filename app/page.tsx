@@ -10,17 +10,19 @@ export default async function Home() {
           </p>
         </div>
 
-        <Card className="bg-white/10 backdrop-blur-sm p-8 mb-[-20] max-w-5xl mx-auto border border-white/20 z-10 relative shadow-lg shadow-black/30">
-          <div className="grid md:grid-cols-2 gap-8 text-lg leading-relaxed text-white">
+        <Card className="bg-white/10 backdrop-blur-sm p-8 mb-4 max-w-5xl mx-auto border border-white/20 z-10 relative shadow-lg shadow-black/30">
+          <div className="space-y-6 text-lg leading-relaxed text-white">
             <p className="text-justify">
-              Here you&apos;ll find projects created in the GameLab, an experimental 
-              English course offered at CentraleSupélec. It&apos;s one of several 
+              Here you&apos;ll find projects created in the GameLab, an experimental
+              English course offered at CentraleSupélec. It&apos;s one of several
               electives available in your first and second years.
             </p>
             <p className="text-justify">
-              The course gives you space to invent, pitch, experiment with, and 
-              test your game, completing a finished project by semester&apos;s end. 
+              The course gives you space to invent, pitch, experiment with, and
+              test your game, completing a finished project by semester&apos;s end.
               Computer games, card games, learning apps, and physical games all fall within scope.
+            </p>
+            <p className="text-justify">
               Feel free to download, test, and comment.
             </p>
           </div>
