@@ -1,7 +1,7 @@
 services:
   db:
     image: mariadb
-    restart: always
+    restart: unless-stopped
     environment:
       - MYSQL_USER=poney
       - MYSQL_PASSWORD=poney
