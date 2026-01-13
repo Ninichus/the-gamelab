@@ -19,6 +19,7 @@ export async function searchGames({
       type?: GameType;
       averageRating?: [number, number];
       tags?: string[];
+      dates: { from: Date | undefined; to: Date | undefined };
     };
   };
   limit?: number;
@@ -33,6 +34,7 @@ export async function searchGames({
         type: gamesTable.type,
         status: gamesTable.status,
         averageRating: gamesTable.averageRating,
+        createdAt: gamesTable.createdAt,
       },
       tags: {
         id: tagsTable.id,
@@ -59,6 +61,12 @@ export async function searchGames({
         query.filters.type
           ? eq(gamesTable.type, query.filters.type)
           : undefined,
+        query.filters.dates.from
+          ? gte(gamesTable.createdAt, query.filters.dates.from)
+          : undefined,
+        query.filters.dates.to
+          ? lte(gamesTable.createdAt, query.filters.dates.to)
+          : undefined,
         eq(gamesTable.status, "published")
       )
     )
@@ -81,7 +89,7 @@ export async function searchGames({
       const tag = row.tags;
       let imagePreview;
       if (row.imagePreview === null) {
-        [{ imagePreview }] = await db
+        const r = await db
           .select({ imagePreview: filesTable.id })
           .from(filesTable)
           .where(
@@ -92,6 +100,7 @@ export async function searchGames({
             )
           )
           .limit(1);
+        imagePreview = r[0]?.imagePreview;
       } else {
         imagePreview = row.imagePreview;
       }

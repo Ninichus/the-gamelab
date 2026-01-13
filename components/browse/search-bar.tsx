@@ -32,11 +32,13 @@ const typeLegend: Record<string, string> = {
   video_game: "Video Game",
 };
 import { Game } from "@/lib/types/games";
+import { DateFilter } from "./date-filter";
 
 type Filters = {
   type?: "board_game" | "cards_game" | "video_game" | "any";
   averageRating: [number, number];
   tags: string[];
+  dates: { from: Date | undefined; to: Date | undefined };
 };
 
 export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
@@ -46,11 +48,13 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
     type: undefined,
     averageRating: [1, 10],
     tags: [],
+    dates: { from: undefined, to: undefined },
   }); // Filters while the dialog is open
   const [filters, setFilters] = useState<Filters>({
     type: undefined,
     averageRating: [1, 10],
     tags: [],
+    dates: { from: undefined, to: undefined },
   }); //Filters used to query
 
   //TODO handle tags filtering ?
@@ -149,6 +153,22 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
                 setSelectedFilters((prev) => ({
                   ...prev,
                   averageRating: [Math.min(...value), Math.max(...value)],
+                }))
+              }
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label className="text-sm font-medium">Creation date</Label>
+            <DateFilter
+              title="Range"
+              selected={selectedFilters.dates}
+              onSelect={(selected) =>
+                setSelectedFilters((prev) => ({
+                  ...prev,
+                  dates: {
+                    from: selected?.from ?? undefined,
+                    to: selected?.to ?? undefined,
+                  },
                 }))
               }
             />
