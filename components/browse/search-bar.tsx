@@ -192,7 +192,7 @@ export function SearchBar({ setGames }: { setGames: (games: Game[]) => void }) {
               onClick={() => {
                 setOpen(false);
                 setFilters(selectedFilters);
-                console.log("Filters applied:", selectedFilters);
+                //console.log("Filters applied:", selectedFilters);
               }}
             >
               Apply filters

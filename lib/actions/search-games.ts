@@ -25,7 +25,7 @@ export async function searchGames({
   limit?: number;
   offset?: number;
 }) {
-  console.log("Searching games with query:", query);
+  //console.log("Searching games with query:", query);
   const result = await db
     .select({
       games: {

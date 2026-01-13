@@ -26,7 +26,7 @@ export const config = {
 };
 
 export async function middleware(request: NextRequest) {
-  console.log("Middleware running", request.nextUrl.pathname);
+  //console.log("Middleware running", request.nextUrl.pathname);
 
   const session = await getSession();
 
