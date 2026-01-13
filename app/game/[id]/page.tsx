@@ -83,6 +83,9 @@ export default async function GamePage({
                 {game.name}
               </h1>
               <GameType game={{ id: game.id, type: game.type }} />
+              <span className="ml-4 text-xs text-gray-500 whitespace-nowrap">
+                {game.createdAt.toLocaleDateString()}
+              </span>
             </CardTitle>
             <CardContent className="flex flex-col gap-4">
               <GameCarousel game={{ id: game.id }} />

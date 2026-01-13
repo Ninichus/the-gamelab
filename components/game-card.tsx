@@ -77,6 +77,9 @@ export function GameCard({ game }: { game: Game }) {
                 {tag.name}
               </Badge>
             ))}
+            <span className="ml-auto text-xs text-gray-500 whitespace-nowrap">
+              {game.createdAt.toLocaleDateString()}
+            </span>
           </div>
         </CardContent>
       </Card>

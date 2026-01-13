@@ -20,6 +20,7 @@ export async function getGames(username: string) {
         type: gamesTable.type,
         status: gamesTable.status,
         averageRating: gamesTable.averageRating,
+        createdAt: gamesTable.createdAt,
       },
       tags: {
         id: tagsTable.id,

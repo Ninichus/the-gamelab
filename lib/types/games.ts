@@ -3,6 +3,7 @@ export type Game = {
   name: string;
   type: GameType;
   status: GameStatus;
+  createdAt: Date;
   tags?: {
     id: number;
     name: string;
