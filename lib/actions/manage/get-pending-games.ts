@@ -32,6 +32,7 @@ export async function getPendingGames(): Promise<
         type: gamesTable.type,
         status: gamesTable.status,
         averageRating: gamesTable.averageRating,
+        createdAt: gamesTable.createdAt,
       },
       tags: {
         id: tagsTable.id,
@@ -56,7 +57,7 @@ export async function getPendingGames(): Promise<
   result.map((row) => {
     const game = row.games;
     const tag = row.tags;
-    const imagePreview = row.imagePreview ? row.imagePreview : undefined;
+    const imagePreview = row.imagePreview ?? undefined;
 
     if (!gamesMap.has(game.id)) {
       gamesMap.set(game.id, { ...game, tags: [], imagePreview });
