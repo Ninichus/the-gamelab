@@ -5,8 +5,8 @@ export async function Footer() {
   return (
     <footer className="bg-muted text-muted-foreground p-4 text-center">
       <p className="text-sm">
-        &copy; {new Date().getFullYear()} - The Gamelab - All rights reserved
-        -&nbsp;
+        &copy; 2025-{new Date().getFullYear()} - The Gamelab - All rights
+        reserved -&nbsp;
         <Link
           href="mailto:ali-deniz.ozkan@centralesupelec.fr?subject=Gamelab"
           className="underline"
